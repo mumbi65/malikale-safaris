@@ -60,17 +60,29 @@ const SafariCard = () => {
   ]);
 
   return (
-    <div className="safari-container">
-      {safaris.map((safari) => (
-        <div key={safari.id} className="safari-card">
-          <img src={safari.image} alt={safari.title} className="safari-image" />
-          <h3>{safari.title}</h3>
-          <p>{safari.duration}</p>
-          <p>{safari.price}</p>
-          <p>{safari.description}</p>
-          <button>Book Now</button>
-        </div>
+    <div className="row align-items safari-container">
+      <div className="safari-content">
+        <h5>Popular</h5>
+        <h2>Explore popular Safaris</h2>
+        <h3>Get started with handpicked top rated trips</h3>
+      </div>
+      {safaris.map((safari, index) => (
+        <div key={index} className="col-md-3 safari-card">
+          <div className="card">
+            <img src={safari.image} className="card-img-top" alt="..." />
+            <div className="card-body">
+              <h5 className="card-title">{safari.title}</h5>
+              <p>{safari.price}</p>
+              <p className="card-text">{safari.description}</p>
+              <a href="#" className="btn btn-outline-secondary">See More</a>
+            </div>
+          </div>
+          </div>
       ))}
+
+      <div>
+        <button className="btn btn-outline-success view-more">View All Safaris</button>
+      </div>
     </div>
   );
 };
