@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./navbar";
 import safari from "../assets/safari.jpg"
 import Footer from "./footer";
+import safari2 from "../assets/safari2.jpg"
 
 const AboutUs = () =>{
     return(
@@ -20,7 +21,7 @@ const AboutUs = () =>{
                 <p>Kenya is one of the least known countries in the world, as well as one of the least explored. It is a country open to the imagination, with so much to discover: – National parks, open savanna, volcanic mountains, salt flats, 1000 years of forests, lakes, rivers and ocean. At the same time, Kenya offers a journey through the history of human evolution as the cultures that originated their thousands of years ago and maintained their customs to this day.</p>
             </div>
             <div className="content-image">
-                <img src={safari} alt="" />
+                <img src={safari2} alt="" />
             </div>
         </div>
         <Footer/>

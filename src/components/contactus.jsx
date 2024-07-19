@@ -130,28 +130,28 @@ const ContactUs = () =>{
                 <div className="contact-us-background-image-container">
                     <div className="contact-info">
                             <h3>Contact Information</h3> <br />
-                            <FontAwesomeIcon icon={faMapMarkerAlt}/>
+                            <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon"/>
                             <h6>Kenya Contact Details:</h6>
                             <h6>P.O. Box 6657 00-200, Nairobi,</h6>
                             <h6>Kenya</h6>
                              <br />
-                             <FontAwesomeIcon icon={faPhoneAlt}/>
+                             <FontAwesomeIcon icon={faPhoneAlt} className="contact-icon"/>
                              <h6>Tell:</h6>
                              <h6>+254748153767</h6>
                              <br />
-                             <FontAwesomeIcon icon={faEnvelope}/>
+                             <FontAwesomeIcon icon={faEnvelope} className="contact-icon"/>
                              <h6>Email:</h6>
                              <h6>malikale@gmail.com</h6>
                              <br />
                              <div className="contactus-socials">
                                 <div>
-                                    <FontAwesomeIcon icon={faFacebook}/>
+                                    <FontAwesomeIcon icon={faFacebook} className="contact-icon"/>
                                 </div>
                                 <div>
-                                    <FontAwesomeIcon icon={faInstagram}/>
+                                    <FontAwesomeIcon icon={faInstagram} className="contact-icon"/>
                                 </div>
                                 <div>
-                                    <FontAwesomeIcon icon={faXTwitter}/>
+                                    <FontAwesomeIcon icon={faXTwitter} className="contact-icon"/>
                                 </div>
                              </div>
                     </div>

@@ -3,10 +3,9 @@ import antelope from "../assets/antelope.jpg"
 import cheetah from "../assets/cheetah.jpg"
 import giraffe from "../assets/giraffe.jpg"
 import lion from "../assets/lion.jpg"
-import zebra from "../assets/zebra.jpg"
 import safari from "../assets/safari.jpg"
-import giraffe2 from "../assets/giraffe2.jpg"
 import SafariCard from "./safaricards";
+import whiterhino from "../assets/white-rhino.jpg"
 
 const HomePage = () =>{
     return(
@@ -29,14 +28,14 @@ const HomePage = () =>{
                             </div>
                     </div>
                     <div className="carousel-item">
-                        <img src={antelope} className="d-block w-100" alt="..." />
+                        <img src={cheetah} className="d-block w-100" alt="..." />
                             <div className="carousel-caption d-none d-md-block">
                                 <h5>Second slide label</h5>
                                 <p>Some representative placeholder content for the second slide.</p>
                             </div>
                     </div>
                     <div className="carousel-item">
-                        <img src={giraffe2} className="d-block w-100" alt="..." />
+                        <img src={whiterhino} className="d-block w-100" alt="..." />
                             <div className="carousel-caption d-none d-md-block">
                                 <h5>Third slide label</h5>
                                 <p>Some representative placeholder content for the third slide.</p>
