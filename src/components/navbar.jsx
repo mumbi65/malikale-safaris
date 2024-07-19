@@ -33,10 +33,10 @@ const NavBar = () =>{
                                         </ul>
                                     </li>
                                     <li className="nav-item navbar-link">
-                                        <a className="nav-link navbar-link" href="#">Gallery</a>
+                                        <Link to="/gallery" className="nav-link navbar-link">Gallery</Link>
                                     </li>
                                     <li className="nav-item navbar-link">
-                                        <a className="nav-link" href="#">Contact Us</a>
+                                        <Link  to="/contactus" className="nav-link" >Contact Us</Link>
                                     </li>
                                 </ul>
                                 {/* <div>

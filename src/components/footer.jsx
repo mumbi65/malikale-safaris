@@ -10,7 +10,7 @@ const Footer = () =>{
         <>
         <div className="background-image-container">
             <div className="footer">
-                <div className="contact-info row">
+                <div className="footer-contact-info row">
                     <h5>Contact Info</h5>
                     <p>Open from 8 AM to 9 PM everyday</p>
                     <p><FontAwesomeIcon icon={faPhone}/> +254748153767</p>

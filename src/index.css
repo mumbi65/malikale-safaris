@@ -124,19 +124,40 @@ button:focus-visible {
 }
 
 .safari-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; /* Adjust to space out items evenly */
-  gap: 10px;
-  margin-top: 10px;
+ width: 99%;
+ margin-left: 7px;
+ padding: 5px;
 }
 
 .safari-card {
-  margin-bottom: 20px;
+  max-width: 30%;
+  margin: 2px;
+  margin-bottom: 10px;
 }
 
 .view-more{
   margin-left: 600px;
+}
+
+@media (max-width: 768px) {
+  .view-more {
+    margin-left: auto;  /* Center the button */
+    margin-right: auto; /* Center the button */
+    display: block;     /* Ensure it’s displayed as a block element */
+    padding: 10px 20px; /* Adjust padding for medium screens */
+    font-size: 16px;    /* Adjust font size for medium screens */
+  }
+}
+
+/* For mobile devices and very small screens (e.g., 576px and below) */
+@media (max-width: 576px) {
+  .view-more {
+    margin-left: auto;  /* Center the button */
+    margin-right: auto; /* Center the button */
+    display: block;     /* Ensure it’s displayed as a block element */
+    padding: 8px 16px;  /* Adjust padding for small screens */
+    font-size: 14px;    /* Adjust font size for small screens */
+  }
 }
 
 .safari-content{
@@ -156,6 +177,11 @@ button:focus-visible {
   line-height: 20px;
   color: burlywood;
   padding: 10px;
+}
+
+.icon{
+  color: burlywood;
+  margin-right: 5px;
 }
 
 .footer{
@@ -191,6 +217,11 @@ button:focus-visible {
   z-index: 1;
 }
 
+.footer-content {
+  position: relative;
+  z-index: 2; /* Ensure content is above the background image */
+}
+
 .aboutus-content {
   display: flex;
   flex-direction: row;
@@ -212,7 +243,6 @@ button:focus-visible {
 
 .heading {
   text-align: center;
-  margin: 20px 0;
   position: relative;
   padding: 60px 20px;
   opacity: 0.5;
@@ -247,3 +277,305 @@ button:focus-visible {
   object-fit: cover; /* Maintain aspect ratio */
   max-height: 400px; /* Set a maximum height for the image */
 }
+
+.carousel-item img{
+  max-height: 70%;
+}
+
+.contactus-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contactus-heading{
+  text-align: center;
+  padding: 20px;
+  font-family: "Protest Revolution", sans-serif;
+  color: black;
+}
+
+.form-area, .contact-us-background-image-container {
+  flex: 1;
+  margin:20px 20px;
+}
+
+.form-area {
+  display: flex;
+  flex-direction: column;
+  border: 1px, dotted, burlywood;
+  border-radius: 5px;
+}
+
+.form-area form{
+  margin: 20px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.submit-btn {
+  background-color: burlywood; /* Replace with your desired color */
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.submit-btn:hover{
+  background-color: green;
+  color: white;
+}
+
+.submit-btn:active{
+  background-color: darkgray;
+}
+
+.contact-info {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  z-index: 2;
+  color: black; /* Adjust the text color as needed */
+  text-align: center;
+  padding: 50px;
+}
+
+.contact-info h3{
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+}
+
+.contact-info h6{
+  font-family:"Shantell Sans", cursive;
+}
+
+.contactus-socials {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 10px;
+}
+
+.contactus-socials .fa {
+  font-size: 1.5rem;
+  margin: 5rem;
+  padding: 10px;
+}
+
+.heading-background-image-container{
+  position: relative;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+.heading-background-image-container::before{
+  content: "";
+  background-image: url('assets/giraffe2.jpg'); /* Path to your image */
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5; /* Adjust the opacity as needed */
+  z-index: 1;
+}
+
+.contact-us-background-image-container{
+  position: relative;
+  width: 100%;
+  
+}
+
+.contact-us-background-image-container::before{
+  content: "";
+  background-image: url('assets/zebra2.jpg'); /* Path to your image */
+  background-size: cover;
+  position: absolute;
+  border-radius: 5px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5; /* Adjust the opacity as needed */
+  z-index: 1;
+}
+
+.error-message{
+  color: rgb(245, 98, 98);
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+}
+
+.gallery-item {
+  flex: 1 1 calc(33.33% - 10px); /* Adjusts each item to take up one-third of the container's width */
+  box-sizing: border-box;
+  margin-bottom: 10px; /* Adds some space between rows */
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 400px;
+  display: block;
+  object-fit: cover;
+  border-radius: 5px;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.05); /* Slightly scales up the image on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds a shadow effect on hover */
+  cursor: pointer;
+}
+
+.gallery-heading{
+  text-align: center;
+  padding: 20px;
+  font-family: "Shantell Sans", cursive;
+  color: white;
+  background-color: burlywood;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.aboutus-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.content-paragraph, .content-image {
+  flex: 1;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .content-paragraph,
+  .content-image {
+      padding: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .content-paragraph,
+  .content-image {
+      flex-basis: 100%;
+  }
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gallery-item {
+  flex: 1 1 calc(33.333% - 1rem);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .gallery-item {
+      flex: 1 1 calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-item {
+      flex: 1 1 100%;
+  }
+}
+
+.contactus-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.form-area,
+.contact-us-background-image-container {
+  flex: 1;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-area,
+  .contact-us-background-image-container {
+      padding: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-area,
+  .contact-us-background-image-container {
+      flex-basis: 100%;
+  }
+}
+
+.contact-info {
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.footer-contact-info, .destinations, .activities, .trip-types {
+  flex: 1;
+  margin: 0 1rem;
+}
+
+.footer-contact-info h5, .destinations h5, .activities h5, .trip-types h5 {
+  margin-bottom: 1rem;
+}
+
+.footer-contact-info p, .destinations p, .activities p, .trip-types p {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .footer {
+      flex-direction: column;
+      text-align: center;
+  }
+  
+  .footer-contact-info, .destinations, .activities, .trip-types {
+      margin: 1rem 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-contact-info, .destinations, .activities, .trip-types {
+      flex-basis: 100%;
+      margin: 0;
+  }
+}
+
+
