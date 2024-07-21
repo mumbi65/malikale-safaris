@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSafari } from "./safaricontext";
 
 const NavBar = () =>{
+
+    const {safaris} = useSafari()
+
     return(
         <>
         <div className="nav-bar">
@@ -15,21 +19,23 @@ const NavBar = () =>{
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item navbar-link">
-                                        <Link to="/" className="nav-link" aria-current="page" href="#">Home</Link>
+                                        <Link to="/" className="nav-link" aria-current="page">Home</Link>
                                     </li>
                                     <li className="nav-item navbar-link">
-                                        <Link to="/aboutus" className="nav-link" href="#">About us</Link>
+                                        <Link to="/aboutus" className="nav-link" >About us</Link>
                                     </li>
                                     <li className="nav-item dropdown navbar-link">
-                                        <a className="nav-link  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a className="nav-link"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             Safaris
                                             {/* dropdown-toggle */}
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li><a className="dropdown-item" href="#">Another action</a></li>
-                                            <li><hr className="dropdown-divider"/></li>
-                                            <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                        <ul className="dropdown-menu" style={{maxWidth: "200rem"}}>
+                                            {safaris.map(safari =>(
+                                                <li key={safari.id}>
+                                                    <Link to={`/safari/${safari.id}`} className="dropdown-item" >{safari.title}</Link>
+                                                </li>
+                                            ))
+                                            }
                                         </ul>
                                     </li>
                                     <li className="nav-item navbar-link">

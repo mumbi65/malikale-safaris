@@ -33,7 +33,7 @@ const ContactUs = () =>{
             alert("Error")
             setSubmitting(false)
         })
-        // resetForm()
+        
     }
 
     const{values, errors, handleChange, handleBlur, handleSubmit, isSubmitting, setSubmitting, touched} = useFormik({

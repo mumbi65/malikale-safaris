@@ -141,6 +141,11 @@ button:focus-visible {
   margin: 2px;
   margin-bottom: 10px;
   overflow: hidden;
+  transition: transform 0.5s ease-out;
+}
+
+.safari-card:hover{
+  transform: scale(1.02);
 }
 
 .safari-card img {
@@ -156,6 +161,7 @@ button:focus-visible {
 
 .view-more{
   margin-left: 550px;
+  padding: 20px;
 }
 
 @media (max-width: 768px) {
@@ -201,6 +207,42 @@ button:focus-visible {
   color: burlywood;
   margin-right: 5px;
 }
+
+.safari-package-container {
+  width: 99%;
+  margin-left: 7px;
+  padding: 5px;
+}
+
+.safari-package-card {
+  padding: 0;
+  margin: 2px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: transform 0.5s ease-out; /* Adds the ease-out animation */
+}
+
+.safari-package-card:hover {
+  transform: scale(1.02); /* Slightly enlarges the card on hover */
+}
+
+.safari-package-card img {
+  height: 200px; /* Adjust the height as needed */
+  width: 100%; /* Make the image occupy the full width of the card */
+  object-fit: cover; /* Ensures the image covers the area without being distorted */
+  transition: transform 0.5s ease-out; /* Adds the ease-out animation */
+}
+
+.safari-package-card img:hover {
+  transform: scale(1.05); /* Slightly zooms in the image on hover */
+}
+
+.safari-package-icon {
+  font-size: 1.2em; /* Adjust the size of the FontAwesome icons */
+  color: burlywood;
+  margin-right: 5px;
+}
+
 
 .footer{
   display: flex;
@@ -296,9 +338,7 @@ button:focus-visible {
   max-height: 400px; /* Set a maximum height for the image */
 }
 
-.carousel-item img{
-  max-height: 70%;
-}
+
 
 .contactus-content {
   display: flex;
@@ -320,7 +360,7 @@ button:focus-visible {
 .form-area {
   display: flex;
   flex-direction: column;
-  border: 1px, dotted, burlywood;
+  border: 1px, solid, burlywood;
   border-radius: 5px;
 }
 
@@ -500,6 +540,247 @@ button:focus-visible {
   padding: 1rem;
 }
 
+
+.safari-detail-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.safari-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.safari-header h1 {
+  font-size: 2.5rem;
+  color: burlywood;
+  font-family: "Shantell Sans", cursive;
+  position: relative;
+  z-index: 1;
+}
+
+.safari-detail-image {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.safari-detail-nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.safari-detail-nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: burlywood;
+  font-weight: bold;
+  position: relative;
+}
+
+.safari-detail-nav a::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: orange;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.safari-detail-nav a:hover::after{
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.safari-detail-nav a:hover{
+  background-color: #ddd;
+  border-radius: 3px;
+}
+
+.safari-section {
+  margin-bottom: 40px;
+}
+
+.safari-section h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: burlywood;
+ font-family: "Edu AU VIC WA NT Hand", cursive;
+}
+
+.safari-section-form{
+  border: 1px solid burlywood;
+  max-width: 70%;
+  margin-left: 190px;
+  box-shadow:rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  border-radius: 10px;
+}
+
+.safari-section-form h2{
+  color: burlywood;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+  margin: 10px;
+  text-align: center;
+}
+
+.safari-section p {
+  font-size: 1.1rem;
+}
+
+.safari-section ul {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+.safari-section li {
+  margin-bottom: 5px;
+}
+
+.icon-detail{
+  color: burlywood;
+  margin-right: 5px;
+}
+
+.accordion-header{
+  font-family:"Shantell Sans", cursive ;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.form-group input[type="number"]::-webkit-outer-spin-button,
+.form-group input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+form button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: burlywood;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+.payment-options-container {
+  max-width: 300px; /* Adjust the width as needed */
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-check input{
+  width: 20px;
+  border-radius: 100px;
+}
+
+.form-input-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.safari-map-content{
+  display: flex;
+  justify-content: space-between;
+  margin:10px;
+}
+
+.safari-section-map {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.safari-section-map h2{
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: burlywood;
+ font-family: "Edu AU VIC WA NT Hand", cursive;
+}
+
+.safari-detail-content-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  flex: 1;
+  gap: 20px;
+  margin: 30px;
+  border: 1px solid burlywood;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.safari-detail-contents {
+  display: contents;
+}
+
+.safari-detail-contents .row-content h6{
+  margin: 0;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.safari-detail-content .row-content p {
+  margin: 5px 0 0 0;
+}
+
+.safari-detail-content .row-content h6, 
+.safari-detail-content .row-content p {
+  flex: 1;
+}
+
+.row-content h6{
+  color: silver;
+}
+
+.row-content{
+  margin: 15px;
+}
+
 @media (max-width: 768px) {
   .content-paragraph,
   .content-image {
@@ -605,4 +886,59 @@ button:focus-visible {
   }
 }
 
+@media (max-width: 1200px) {
+  .safari-detail-content-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .safari-detail-content-section {
+    grid-template-columns: 1fr;
+  }
+
+  .safari-detail-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .safari-detail-nav a {
+    margin-bottom: 10px;
+  }
+  
+  .safari-section-form .form-input-content {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .safari-map-content {
+    flex-direction: column;
+  }
+  .safari-section-map {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .safari-detail-content-section {
+    margin: 20px;
+    padding: 10px;
+  }
+  .safari-detail-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+  .safari-detail-nav a {
+    margin-bottom: 10px;
+  }
+
+  .safari-section-form .form-input-content {
+    display: block;
+  }
+  .safari-section-form .form-group {
+    width: 100%;
+  }
+  .safari-section-form{
+    margin-left: 0;
+  }
+}
 

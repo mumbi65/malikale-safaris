@@ -14,7 +14,7 @@ const AboutUs = () =>{
         <div className="aboutus-content">
             <div className="content-paragraph">
                 <h5>About MaliKale Kenya Safaris</h5>
-                <p>Mali Kale Kenya Safari’s Ltd, Was established and registered in Kenya by Patrick who was working in the tourism industry where he got enough experience after working with different company in Kenya hence he decided to establish Mali Kale in 2010.</p> <br />
+                <p>Mali Kale Kenya Safari’s Ltd, Was established and registered in Kenya by Patrick who is working in the tourism industry where he got enough experience after working with different companies in Kenya hence he decided to establish Mali Kale in 2010.</p> <br />
 
                 <p>Now I decide to share my experience with everybody and explore Kenya, and also to encourage a new way of Travel into the remote of Northern and southern circuit in Kenya.</p> <br />
                 
