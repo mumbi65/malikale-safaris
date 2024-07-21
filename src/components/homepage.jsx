@@ -20,22 +20,22 @@ const HomePage = () =>{
                     <div className="carousel-item active">
                         <img src={safari} className="d-block w-100" alt="..."/>
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>First slide label</h5>
-                                <p>Some representative placeholder content for the first slide.</p>
+                                <h5>Explore the Wild</h5>
+                                <p>Embark on an unforgettable safari adventure and witness the majestic wildlife in their natural habitat.</p>
                             </div>
                     </div>
                     <div className="carousel-item">
                         <img src={cheetah} className="d-block w-100" alt="..." />
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>Second slide label</h5>
-                                <p>Some representative placeholder content for the second slide.</p>
+                                <h5>Witness the Speed</h5>
+                                <p>Experience the thrill of seeing a cheetah in action, the fastest land animal on earth.</p>
                             </div>
                     </div>
                     <div className="carousel-item">
                         <img src={whiterhino} className="d-block w-100" alt="..." />
                             <div className="carousel-caption d-none d-md-block">
-                                <h5>Third slide label</h5>
-                                <p>Some representative placeholder content for the third slide.</p>
+                                <h5>Encounter the Giants</h5>
+                                <p>Get up close and personal with the magnificent white rhino, a symbol of strength and resilience.</p>
                             </div>
                     </div>
                 </div>
