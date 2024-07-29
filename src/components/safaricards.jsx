@@ -49,3 +49,11 @@ const SafariCard = () => {
 };
 
 export default SafariCard;
+
+
+// Redux - state management
+// Creating your own hooks
+// Chartjs - creating charts
+// Material UI
+// Tailwind CSS
+// Bootstrap
