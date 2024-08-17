@@ -136,8 +136,7 @@ button:focus-visible {
 }
 
 .safari-card {
-  padding: 0;
-  max-width: 30%;
+  width: 30%;
   margin: 2px;
   margin-bottom: 10px;
   overflow: hidden;
@@ -215,6 +214,7 @@ button:focus-visible {
 }
 
 .safari-package-card {
+  width: 32%;
   padding: 0;
   margin: 2px;
   margin-bottom: 10px;
@@ -868,6 +868,8 @@ form button:hover {
   margin-bottom: 0.5rem;
 }
 
+
+
 @media (max-width: 768px) {
   .footer {
       flex-direction: column;
@@ -942,3 +944,50 @@ form button:hover {
   }
 }
 
+@media (max-width: 1200px) {
+  .safari-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 992px) {
+  .safari-card {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .safari-card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  .safari-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .safari-package-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 992px) {
+  .safari-package-card {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .safari-package-card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 576px) {
+  .safari-package-card {
+    width: 100%;
+  }
+}

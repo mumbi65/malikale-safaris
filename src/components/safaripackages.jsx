@@ -18,7 +18,7 @@ const SafariPackage = () => {
     <div className="row justify-content-around safari-package-container">
       {safaris.map((safari, index) => (
         
-          <div className="card col-md-3 safari-package-card" key={safari.id} style={{width: "32%"}}>
+          <div className="card col-md-3 safari-package-card" key={safari.id}>
             <img src={safari.image} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{safari.title}</h5>

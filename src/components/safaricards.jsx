@@ -26,7 +26,7 @@ const SafariCard = () => {
       </div>
       {safaris.map((safari) => (
         
-          <div className="card col-md-3 safari-card" style={{width: "30%"}} key={safari.id}>
+          <div className="card col-md-3 safari-card" key={safari.id}>
             <img src={safari.image} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{safari.title}</h5>
