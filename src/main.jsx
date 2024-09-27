@@ -11,6 +11,7 @@ import Gallery from './components/gallery.jsx';
 import SafariPackage from './components/safaripackages.jsx';
 import SafariDetail from './components/safaridetail.jsx';
 import { SafariProvider } from './components/safaricontext.jsx';
+import Login from './components/login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: '/safari/:id',
     element: <SafariDetail/>
+  },
+  {
+    path: '/login',
+    element: <Login/>
   }
 ])
 

@@ -30,3 +30,26 @@ const AboutUs = () =>{
 }
 
 export default AboutUs
+
+
+// .content-image img {
+//     max-width: 100%;
+//     height: auto;
+//     border-radius: 10px; /* Optional: Add rounded corners */
+//     object-fit: cover; /* Maintain aspect ratio */
+//     max-height: 400px; /* Set a maximum height for the image */
+//   }
+
+// .aboutus-content {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 20px;
+//     gap: 20px;
+//   }
+
+// .form-area, .contact-us-background-image-container {
+//     flex: 1;
+//     margin:20px 20px;
+//   }
