@@ -485,6 +485,7 @@ button:focus-visible {
 
 .error-message{
   color: rgb(245, 98, 98);
+  margin-top: 5px;
 }
 
 .gallery-container {
@@ -817,32 +818,40 @@ form button:hover {
 .brand-title {
   font-size: 2.5rem;
   font-weight: bold;
-  font-family: cursive;
+  font-family: "Protest Revolution", sans-serif;
   margin-bottom: 1rem;
+}
+
+.brand-title span{
+  background-color: rgb(7, 145, 7);
+  color: white;
+  border-radius: 2px;
 }
 
 .login-form h3 {
   font-size: 1.2rem;
   color: #333;
   margin-bottom: 2rem;
+  font-family: cursive;
 }
 
 .form-group {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   text-align: left;
 }
 
 .form-group label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
   font-size: 0.9rem;
   color: #555;
+  text-align: left;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  font-size: 1rem;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
   outline: none;
@@ -852,11 +861,28 @@ form button:hover {
   position: relative;
 }
 
+.password-container {
+  position: relative;
+  width: 100%; /* Ensure full width of the input */
+}
+
+.password-input {
+  width: 100%;
+  padding-right: 40px; /* Add padding to avoid overlap with the icon */
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .password-toggle {
   position: absolute;
   right: 10px;
-  top: 45px;
+  top: 50%;
   cursor: pointer;
+  transform: translateY(-50%);
   color: #888;
 }
 
@@ -870,13 +896,17 @@ form button:hover {
   text-decoration: none;
 }
 
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
 .btn-login {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   background-color: #029132;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -886,14 +916,12 @@ form button:hover {
   background-color: #0b3414;
 }
 
-.error-message {
-  color: red;
-  margin-top: 1rem;
-}
 
 .divider {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
+  font-size: 1rem;
   position: relative;
+  text-align: center;
 }
 
 .divider::before, .divider::after {
@@ -903,14 +931,16 @@ form button:hover {
   background-color: #ddd;
   display: inline-block;
   vertical-align: middle;
+  top: 50%;
+  position: absolute;
 }
 
 .divider::before {
-  margin-right: 0.5rem;
+  left: 0;
 }
 
 .divider::after {
-  margin-left: 0.5rem;
+right: 0;
 }
 
 .btn-google {
@@ -937,13 +967,242 @@ form button:hover {
 }
 
 .signup-link {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .signup-link a {
   color: #0bad4e;
   text-decoration: none;
 }
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+.register-page {
+  display: flex;
+  min-height: 100vh;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding: 0;
+  
+}
+
+.register-left {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.register-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  
+}
+
+.register-right{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  overflow-y: auto;
+  height: 100vh;
+  overflow: hidden;
+  max-height: 100vh;
+ 
+}
+
+.register-form-container{
+  max-width: 400px;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  
+}
+
+.register-title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.register-form .form-content {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-content{
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.register-form-label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  padding-right: 2.5rem;
+}
+
+.form-control:focus {
+  border-color: #329673; /* Highlight border on focus */
+  outline: none;
+}
+
+.btn-register {
+  width: 100%;
+  padding: 8px;
+  background-color: #029132;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-register:hover {
+  background-color: #113424;
+}
+
+input.form-control {
+  width: 100%;
+  padding-right: 40px;
+  line-height: 1.5;
+  padding: 10px;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.main-section {
+  flex: 2;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+  color: #029132;
+  margin-bottom: 15px;
+}
+
+.profile-info form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.profile-info form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #029132;
+}
+
+.profile-button {
+  padding: 10px 10px;
+  background-color: #029132;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.profile-button:hover {
+  background-color: #027a24;
+}
+
+.graph-section {
+  margin-top: 30px;
+}
+
+.graph-placeholder {
+  height: 200px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.safari-cardy, .review-card {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5pxpx rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  margin-bottom: 10px;
+}
+
+.safari-cardy:hover, .review-card:hover {
+  transform: translateY(-3px); 
+}
+
+.safari-cardy p, .review-card p {
+  margin: 5px 0;
+}
+
+.edit-review-button {
+  background-color: #029132;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.edit-review-button:hover {
+  background-color: #027a24;
+}
+
+.safari-cardy button, .review-card button {
+  background-color: #029132;
+}
+
 
 @media (max-width: 768px) {
   .content-paragraph,
@@ -1188,7 +1447,7 @@ form button:hover {
 
 @media (max-width: 768px) {
   .login-left {
-      display: none; /* Hide the image for small screens to focus on the form */
+      display: none;
   }
 
   .login-right {
@@ -1226,5 +1485,45 @@ form button:hover {
   .btn-google {
       padding: 10px;
       font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-page {
+      flex-direction: column;
+  }
+
+  .register-left {
+      display: none;
+  }
+
+  .register-right {
+      flex: 1;
+      padding: 1rem;
+      justify-content: center;
+  }
+
+  .register-form-container {
+      width: 100%;
+      max-width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .register-right {
+      padding: 0.5rem;
+  }
+
+  .register-form-container {
+      max-width: 100%;
+  }
+
+  .register-title {
+      font-size: 1.5rem;
+  }
+
+  .form-control {
+      font-size: 1rem;
   }
 }

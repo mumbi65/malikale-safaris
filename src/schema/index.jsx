@@ -17,3 +17,19 @@ export const bookingFormSchema = yup.object().shape({
     subject:  yup.string().required("Required"),
     message: yup.string().required("Required")
 })
+
+export const loginFormSchema = yup.object().shape({
+    username: yup.string().required("Username is required").min(3, "Username must be at least 3 characters"),
+    password: yup.string().required("Password is required"),
+})
+
+
+export const registerFormSchema = yup.object().shape({
+    username: yup.string().required("Required").min(3, "Username must be at least 3 characters"),
+    fullnames: yup.string().required("Required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().required("Password is required"),
+    confirmPassword: yup.string()
+    .oneOf([yup.ref('password'), null], "Password must match")
+    .required("Required"),
+})
