@@ -28,7 +28,7 @@ const Login = () => {
                 password,
             })
             localStorage.setItem("token", response.data.token)
-            navigate("/")
+            navigate("/home")
         } catch (error) {
             if (error.name === "ValidationError") {
                 const newErrors = {};

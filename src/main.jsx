@@ -17,7 +17,7 @@ import Profile from './components/profile.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/home',
     element:<App/>
   },
   {
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     element: <SafariDetail/>
   },
   {
-    path: '/login',
+    path: '/',
     element: <Login/>
   },
   {

@@ -184,7 +184,7 @@ const Register = () => {
                     </form>
                     <div className="divider">or</div>
                     <div className="signup-link">
-                        Already have an account? <Link to="/login">Sign In</Link>
+                        Already have an account? <Link to="/">Sign In</Link>
                     </div>
                 </div>
             </div>

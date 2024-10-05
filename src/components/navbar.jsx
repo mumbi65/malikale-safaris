@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSafari } from "./safaricontext";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const NavBar = () =>{
 
@@ -19,7 +21,7 @@ const NavBar = () =>{
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item navbar-link">
-                                        <Link to="/" className="nav-link" aria-current="page">Home</Link>
+                                        <Link to="/home" className="nav-link" aria-current="page">Home</Link>
                                     </li>
                                     <li className="nav-item navbar-link">
                                         <Link to="/aboutus" className="nav-link" >About us</Link>
@@ -43,6 +45,9 @@ const NavBar = () =>{
                                     </li>
                                     <li className="nav-item navbar-link">
                                         <Link  to="/contactus" className="nav-link" >Contact Us</Link>
+                                    </li>
+                                    <li className="nav-item navbar-link">
+                                        <Link  to="/profile" className="nav-link" ><FontAwesomeIcon icon={faUser}/></Link>
                                     </li>
                                 </ul>
                                 {/* <div>

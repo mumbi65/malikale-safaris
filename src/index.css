@@ -877,6 +877,7 @@ form button:hover {
   border-radius: 5px;
 }
 
+
 .password-toggle {
   position: absolute;
   right: 10px;
@@ -913,7 +914,7 @@ form button:hover {
 }
 
 .btn-login:hover {
-  background-color: #0b3414;
+  background-color: #027a24;
 }
 
 
@@ -1079,7 +1080,7 @@ right: 0;
 }
 
 .btn-register:hover {
-  background-color: #113424;
+  background-color: #027a24;
 }
 
 input.form-control {
@@ -1093,15 +1094,19 @@ input.form-control {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background-color: #f9f9f9;
+  
 }
 
 .main-section {
   flex: 2;
   padding: 20px;
-  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
@@ -1122,9 +1127,18 @@ input.form-control {
 
 .input-field {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #029132;
   border-radius: 5px;
   margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.input-fieldy {
+  width: 100%;
+  padding-right: 40px; /* Add padding to make space for the icon */
+  padding: 10px;
+  border: 1px solid #029132;
+  border-radius: 5px;
   transition: border-color 0.3s;
 }
 
@@ -1152,14 +1166,34 @@ input.form-control {
 }
 
 .graph-placeholder {
-  height: 200px;
-  background-color: #f0f0f0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-weight: bold;
   color: #666;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  padding: 10px;
+  gap: 10px
+}
+
+.graph-placeholder .row-content p {
+  margin: 5px 0 0 0;
+}
+
+
+.row-contenty h6{
+  color: silver;
+}
+
+.graph-placeholder .row-contenty h6,
+.graph-placeholder .row-contenty p{
+  margin: 0;
+  font-size: 1rem;
+}
+
+.row-contenty{
+  margin: 10px;
+  word-wrap: break-word;
 }
 
 .right-section {
@@ -1167,13 +1201,15 @@ input.form-control {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background-color: #fff;
+  padding: 10px;
 }
 
 .safari-cardy, .review-card {
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 5pxpx rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   transition: transform 0.2s;
   margin-bottom: 10px;
 }
@@ -1203,6 +1239,23 @@ input.form-control {
   background-color: #029132;
 }
 
+.logout-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #029132;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #027a24;
+}
 
 @media (max-width: 768px) {
   .content-paragraph,
@@ -1525,5 +1578,95 @@ input.form-control {
 
   .form-control {
       font-size: 1rem;
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .profile-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .main-section, .right-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .profile-info form {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+  }
+
+  .graph-placeholder {
+    grid-template-columns: repeat(2, 1fr); /* Adjust grid layout for the graph */
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .profile-container {
+    padding: 5px;
+  }
+
+  .main-section, .right-section {
+    padding: 10px;
+  }
+
+  .graph-placeholder {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    font-size: 0.9rem; /* Smaller font for mobile */
+  }
+
+  .input-field, .input-fieldy {
+    padding: 8px;
+  }
+
+  .profile-button, .logout-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .password-container {
+    padding: 0;
+  }
+
+  /* Reduce margin and padding for better mobile layout */
+  .row-contenty {
+    margin: 5px 0;
+  }
+
+  .profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .graph-placeholder .row-contenty h6,
+  .graph-placeholder .row-contenty p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+    font-size: 1rem;
+  }
+
+  .input-field, .input-fieldy {
+    padding: 6px;
+  }
+
+  .profile-button, .logout-button {
+    font-size: 12px;
+  }
+
+  .safari-cardy, .review-card {
+    padding: 15px;
+    font-size: 0.85rem;
+  }
+
+  .graph-placeholder {
+    font-size: 0.8rem;
+  }
+
+  .row-contenty h6 {
+    font-size: 1rem; /* Adjust heading size */
   }
 }
