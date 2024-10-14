@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     element:<SafariPackage/>
   },
   {
-    path: '/safari/:id',
+    path: '/safari/:safariId',
     element: <SafariDetail/>
   },
   {

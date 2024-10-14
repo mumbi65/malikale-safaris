@@ -32,7 +32,7 @@ const NavBar = () =>{
                                             {/* dropdown-toggle */}
                                         </a>
                                         <ul className="dropdown-menu" style={{maxWidth: "200rem"}}>
-                                            {safaris.map(safari =>(
+                                            {safaris?.length > 0 && safaris.map(safari =>(
                                                 <li key={safari.id}>
                                                     <Link to={`/safari/${safari.id}`} className="dropdown-item" >{safari.title}</Link>
                                                 </li>

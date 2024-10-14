@@ -7,6 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { registerFormSchema } from "../schema";
 import { BeatLoader} from "react-spinners"
+import Footer from "./footer";
 
 
 const Register = () => {
@@ -61,7 +62,7 @@ const Register = () => {
 
             await axios.post("http://127.0.0.1:8000/api/auth/register/", dataToSubmit)
 
-            navigate('/login')
+            navigate('/')
 
         } catch (validationErrors) {
              if (validationErrors.name === "ValidationError") {

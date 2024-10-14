@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { loginFormSchema } from "../schema";
+import Footer from "./footer";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -98,6 +99,7 @@ const Login = () => {
                 </div>
 
             </div>
+           
         </>
     )
 }

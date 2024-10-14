@@ -14,6 +14,7 @@ import mombasa from "../assets/mombasa1.jpg"
 import mombasa1 from "../assets/mombasa2.jpg"
 import nakuru from "../assets/nakuru.jpg"
 
+
 const SafariContext = createContext();
 
 export const useSafari = () => useContext(SafariContext);

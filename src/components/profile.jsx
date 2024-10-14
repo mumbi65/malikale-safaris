@@ -33,10 +33,10 @@ const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
     const [userData, setUserData] = useState(null)
-    const token = localStorage.getItem("token")
     const [safaris, setSafaris] = useState([])
     const [reviews, setReviews] = useState([])
     const [showPassword, setShowPassword] = useState(false)
+    const token = localStorage.getItem("token")
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -53,13 +53,16 @@ const Profile = () => {
         setSafaris(bookedSafaris)
     }
 
-    const fetchReviews = () => {
-        // mock data
-        const userReviews = [
-            { id: 1, safariName: "Safari to Kilimanjaro", reviewText: "Amazing experience!" },
-            { id: 2, safariName: "Safari to Maasai Mara", reviewText: "Breathtaking views!" },
-          ]
-          setReviews(userReviews)
+    const fetchReviews = async () => {
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/safari/reviews/", {
+                headers: {Authorization: `Token ${token}`},
+            })
+            console.log("Fetched reviews:", response.data); 
+            setReviews(response.data)
+        } catch (error) {
+            console.error("Error fetching reviews", error)
+        }
     }
 
     const handleReview = (safariId) => {
@@ -296,13 +299,18 @@ const Profile = () => {
                 </div>
                 <div className="reviews-section">
                     <h2>Your Reviews</h2>
-                    {reviews.map((review) => (
+                    { reviews.length > 0 ? (
+                    reviews.map((review) => (
                         <div key={review.id} className="review-card">
                             <p><strong>{review.safariName}</strong></p>
-                            <p>{review.reviewText}</p>
+                            <p><strong>Rating:</strong> {review.rating}</p>
+                            <p>{review.comment}</p>
                             <button onClick={() => editReview(review.id)} className="edit-review-button">Edit Review</button>
                         </div>
-                    ))}
+                    ))
+                ) : (
+                    <p>No reviews yet</p>
+                )}
                 </div>
             </div>
         </div>
