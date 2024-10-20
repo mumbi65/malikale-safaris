@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import UserRegistrationSerializer, UserProfileSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny
+from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
 class UserRegistrationView(APIView):
@@ -26,10 +27,25 @@ class UserRegistrationView(APIView):
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
-        response = super(CustomAuthToken, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.data['token'])
-        return Response({'token': token.key, 'user_id': token.user_id})
-    
+        identifier = request.data.get('username')
+        password = request.data.get('password')
+
+        try:
+            if "@" in identifier:
+                user = User.objects.get(email = identifier)
+            else:
+                user = User.objects.get(username=identifier)
+            
+            if user.check_password(password):
+                token,_=Token.objects.get_or_create(user=user)
+                return Response({'token': token.key, 'user_id': user.id})
+            else:
+                return Response({'error':_("Invalid credentials")}, status=status.HTTP_400_BAD_REQUEST)
+        
+        except User.DoesNotExist:
+            return Response({'error':_("Invalid credentials")}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserProfileView(APIView):

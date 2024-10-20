@@ -44,13 +44,15 @@ const Profile = () => {
         fetchReviews()
     }, [])
 
-    const fetchBookedSafaris = () => {
-        // mock data
-        const bookedSafaris = [
-            {id: 1, name: "Safari to Kilimanjaro", dates: "01/01/2024 - 01/07/2024", location: "Tanzania"},
-            { id: 2, name: "Safari to Maasai Mara", dates: "05/10/2024 - 05/14/2024", location: "Kenya" },
-        ]
-        setSafaris(bookedSafaris)
+    const fetchBookedSafaris = async () => {
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/safari/api/booked/", {
+                headers: {Authorization: `Token ${token}`},
+            })
+            setSafaris(response.data)
+        } catch (error) {
+            console.error("Error fetching booked safaris", error)
+        }
     }
 
     const fetchReviews = async () => {
@@ -288,14 +290,20 @@ const Profile = () => {
             <div className="right-section">
                 <div className="booked-safaris">
                     <h2>Booked Safaris</h2>
-                    {safaris.map((safari) => (
-                        <div key={safari.id} className="safari-cardy">
-                            <p><strong>{safari.name}</strong></p>
-                            <p>{safari.dates}</p>
-                            <p>{safari.location}</p>
-                            <button onClick={() => handleReview(safari.id)} className="profile-button">Review</button>
+                    {safaris.length > 0 ? (
+                    safaris.map((booking) => (
+                        <div key={booking.id} className="safari-cardy">
+                            <p><strong>{booking.safari.title}</strong></p>
+                            <p>Booking Date: {booking.bookingDate}</p>
+                            <p>Location: {booking.safari.location}</p>
+                            <button onClick={() => handleReview(booking.id)} className="profile-button">Review</button>
                         </div>
-                    ))}
+                    ))
+                ): (
+                    <div className="safari-cardy"> 
+                        <p className="booking-paragraph">No bookings yet. Start your adventure by booking a safari!</p>
+                    </div>
+                )}
                 </div>
                 <div className="reviews-section">
                     <h2>Your Reviews</h2>
@@ -309,7 +317,9 @@ const Profile = () => {
                         </div>
                     ))
                 ) : (
+                    <div className="review-card">
                     <p>No reviews yet</p>
+                    </div>
                 )}
                 </div>
             </div>

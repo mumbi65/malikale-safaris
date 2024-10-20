@@ -15,11 +15,19 @@ export const bookingFormSchema = yup.object().shape({
     adults: yup.number().min(1).max(15).required("Required"),
     children: yup.number().min(0).max(15).required("Required"), 
     subject:  yup.string().required("Required"),
-    message: yup.string().required("Required")
+    message: yup.string().required("Required"),
+    bookingDate: yup.date().required('Please select a booking date')
 })
 
 export const loginFormSchema = yup.object().shape({
-    username: yup.string().required("Username is required").min(3, "Username must be at least 3 characters"),
+    identifier: yup
+        .string()
+        .required("Username or email is required")
+        .min(3, "Must be at least 3 characters") // Updated message for consistency
+        .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Must be a valid email address")
+        .test('username-or-email', 'Must be a valid username or email', value => {
+            return value && (value.includes('@') || value.length >= 3);
+        }),
     password: yup.string().required("Password is required"),
 })
 

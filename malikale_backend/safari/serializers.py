@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import SafariPackage, Review
+from .models import SafariPackage, Review, Booking
 
 class SafariPackageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +15,19 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ['id', 'username', 'user', 'safari', 'safariName', 'rating', 'comment', 'created_at', 'updated_at']
         read_only_fields = ['user', 'created_at', 'updated_at']
+
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Booking
+        fields = '__all__'
+
+
+class BookingDetailSerializer(serializers.ModelSerializer):
+    safari = SafariPackageSerializer()
+
+    class Meta:
+        model = Booking
+        fields = '__all__'

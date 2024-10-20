@@ -14,6 +14,7 @@ import { SafariProvider } from './components/safaricontext.jsx';
 import Login from './components/login.jsx';
 import Register from './components/register.jsx';
 import Profile from './components/profile.jsx';
+import Payment from './components/payment.jsx';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile/>
+  },
+  {
+    path: '/payment/:safariId',
+    element: <Payment/>
   }
 ])
 

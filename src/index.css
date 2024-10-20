@@ -76,6 +76,8 @@ button:focus-visible {
   display: flex;
   justify-content: space-between;
   background-color: rgb(250, 250, 250);
+  align-items: center;
+  position: relative;
 }
 
 .nav-bar h1{
@@ -89,7 +91,7 @@ button:focus-visible {
 }
 
 .navbar-link a{
-  margin-right: 20px;
+  /* margin-right: 20px; */
   margin: 10px;
   color: #333;
   padding: 5px 10px;
@@ -97,7 +99,7 @@ button:focus-visible {
   position: relative;
   font-size: 1.15rem;
   font-family: 'Poppins', sans-serif;
-  
+  white-space: nowrap;
 }
 
 .navbar-link a::after{
@@ -122,6 +124,24 @@ button:focus-visible {
   background-color: #ddd;
   border-radius: 3px;
 }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: auto;
+  max-width: 375px;
+  width: auto;
+  z-index: 1000;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 600px;
+
+}
+
+/* .dropdown-item{
+  white-space: nowrap;
+} */
 
 .carousel-item img {
   height: 500px;
@@ -1222,6 +1242,13 @@ input.form-control {
   margin: 5px 0;
 }
 
+.booking-paragraph{
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .edit-review-button {
   background-color: #029132;
   color: #fff;
@@ -1332,6 +1359,129 @@ input.form-control {
 .review p {
   margin: 5px 0;
   line-height: 1.6;
+}
+
+.payment-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #f4f4f4;
+  overflow: hidden;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* border-radius: 8px; */
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #029132;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h1{
+  text-align: center;
+}
+
+.form-section h2{
+  color: #029132;
+ font-family: "Edu AU VIC WA NT Hand", cursive;
+}
+
+.payment-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(190, 189, 189);
+}
+
+.payment-options label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.payment-form-content {
+  flex-grow: 1;
+  margin-top: 2px;
+}
+
+.mpesa-form, .paypal-form {
+  margin-top: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mpesa-form input[type="text"], .paypal-form input[type="text"] {
+  padding: 10px;
+  /* margin-top: 5px;
+  margin-bottom: 15px; */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.payment-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.back-btn, .confirm-btn {
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-btn {
+  background-color:  lightgray;
+}
+
+.confirm-btn {
+  background-color: #029132;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #026b28;
 }
 
 @media (max-width: 768px) {
@@ -1745,5 +1895,101 @@ input.form-control {
 
   .row-contenty h6 {
     font-size: 1rem; /* Adjust heading size */
+  }
+}
+
+@media (max-width: 1024px) {
+  .booking-reviews-container {
+    flex-direction: column; /* Stack the form and reviews vertically */
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .safari-section-form, .reviews-container {
+    max-width: 100%; /* Take full width */
+    margin-bottom: 30px; /* Add space between form and reviews */
+  }
+
+  .reviews-list {
+    gap: 10px; /* Reduce gap between reviews */
+  }
+
+  .reviews-container {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .booking-form-container{
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-input-content {
+    flex-direction: column; /* Stack input fields vertically */
+  }
+
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    font-size: 14px; /* Adjust input sizes for small screens */
+  }
+
+  .booking-form-container, .reviews-container {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .submit-btn, .btn {
+    width: 100%; /* Make buttons full width on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-reviews-container {
+    padding: 10px;
+  }
+
+  .safari-section-form h2, .reviews-container h2 {
+    font-size: 18px; /* Make headings smaller for mobile */
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input, .form-group textarea {
+    font-size: 12px;
+  }
+
+  .reviews-container {
+    flex: 1;
+    padding: 20px;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  .reviews-list {
+    gap: 10px; /* Reduce space between reviews */
+  }
+
+  .review-cardy {
+    padding: 10px; /* Reduce padding on mobile */
+  }
+
+  .review-username {
+    font-size: 18px;
+  }
+
+  .review-comment {
+    font-size: 13px;
+  }
+
+  .review-date {
+    font-size: 12px;
+    text-align: right;
+  }
+
+  .safari-section-form {
+    margin-bottom: 20px; /* Space between the form and reviews */
   }
 }

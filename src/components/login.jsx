@@ -10,7 +10,7 @@ import { loginFormSchema } from "../schema";
 import Footer from "./footer";
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false)
     const [error, setError] = useState("");
@@ -19,13 +19,13 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError({username: '', password: ''})
+        setError({identifier: '', password: ''})
         setLoading(true)
         try {
-            await loginFormSchema.validate({username, password}, { abortEarly: false })
+            await loginFormSchema.validate({identifier, password}, { abortEarly: false })
 
             const response = await axios.post("http://127.0.0.1:8000/api/auth/login/", {
-                username,
+                username: identifier,
                 password,
             })
             localStorage.setItem("token", response.data.token)
@@ -57,13 +57,13 @@ const Login = () => {
                         <h3>Welcome to MaliKale Safaris</h3>
                         <form onSubmit={handleLogin} className="login-form">
                             <div className="form-group">
-                                <label>Username</label>
+                                <label>Username or Email</label>
                                 <input type="text"
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)} className="form-control"
+                                    placeholder="Username or Email"
+                                    value={identifier}
+                                    onChange={(e) => setIdentifier(e.target.value)} className="form-control"
                                     />
-                                    {error.username && <div className="error-message">{error.username}</div>}
+                                    {error.identifier && <div className="error-message">{error.identifier}</div>}
                             </div>
                             <div className="mb-3 form-group">
                                 <label htmlFor="password" class="form-label">Password</label>
