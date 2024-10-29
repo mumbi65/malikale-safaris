@@ -15,6 +15,7 @@ import Login from './components/login.jsx';
 import Register from './components/register.jsx';
 import Profile from './components/profile.jsx';
 import Payment from './components/payment.jsx';
+import ForgotPassword from './components/forgotpassword.jsx';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: '/payment/:safariId',
     element: <Payment/>
+  },
+  {
+    path: '/forgotPassword',
+    element: <ForgotPassword/>
   }
 ])
 

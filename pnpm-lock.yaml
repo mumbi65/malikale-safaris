@@ -20,6 +20,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.6.0)(react@18.3.1)
+      '@paypal/react-paypal-js':
+        specifier: ^8.7.0
+        version: 8.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-google-maps/api':
         specifier: ^2.20.2
         version: 2.20.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -767,6 +770,18 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@paypal/paypal-js@8.1.2':
+    resolution: {integrity: sha512-EKshGSWRxLWU1NyPB9P1TiOkPajVmpTo5I9HuZKoSv8y2uk0XIskXqMkAJ/Y9qAg9iJyP102Jb/atX63tTy24w==}
+
+  '@paypal/react-paypal-js@8.7.0':
+    resolution: {integrity: sha512-KW4EdL8hlLWBY6f9l1csxQ8Szh5bhMFLxl+DV29jHNwdlM6z3s+w4LZQ7GtgHktSrlNBHgblNNvwLNpcDtsZgg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@paypal/sdk-constants@1.0.150':
+    resolution: {integrity: sha512-ETm/mtiTBw4gHPdKo3GXzSQyXfZKevSg+ujfEvZbLT9gCc/YFmTBnWDroqmzOeuSXnf2Ll4bBSp3xbr47NQbUQ==}
 
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
@@ -1529,6 +1544,9 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  hi-base32@0.5.1:
+    resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
+
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
@@ -1915,6 +1933,9 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  promise-polyfill@8.3.0:
+    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
 
   prop-types-extra@1.1.1:
     resolution: {integrity: sha512-59+AHNnHYCdiC+vMwY52WmvP5dM3QLeoumYuEyceQDi9aEhtwN9zIQ2ZNo25sMyXnbh32h+P1ezDsUpUH3JAew==}
@@ -3205,6 +3226,21 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
+  '@paypal/paypal-js@8.1.2':
+    dependencies:
+      promise-polyfill: 8.3.0
+
+  '@paypal/react-paypal-js@8.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@paypal/paypal-js': 8.1.2
+      '@paypal/sdk-constants': 1.0.150
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@paypal/sdk-constants@1.0.150':
+    dependencies:
+      hi-base32: 0.5.1
+
   '@popperjs/core@2.11.8': {}
 
   '@protobufjs/aspromise@1.1.2': {}
@@ -4099,6 +4135,8 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  hi-base32@0.5.1: {}
+
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
@@ -4474,6 +4512,8 @@ snapshots:
       source-map-js: 1.2.0
 
   prelude-ls@1.2.1: {}
+
+  promise-polyfill@8.3.0: {}
 
   prop-types-extra@1.1.1(react@18.3.1):
     dependencies:

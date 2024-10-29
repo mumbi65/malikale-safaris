@@ -29,6 +29,7 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import { BeatLoader } from 'react-spinners';
 
 
 const SafariDetail = () => {
@@ -38,6 +39,7 @@ const SafariDetail = () => {
   const [error, setError] = useState(null)
   const [reviews, setReviews] = useState([])
   const [loadingReviews, setLoadingReviews] = useState(false)
+  const [safariLoading, setSafariLoading] = useState(false)
   const navigate = useNavigate()
 
   const { safaris } = useSafari()

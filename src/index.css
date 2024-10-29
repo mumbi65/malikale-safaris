@@ -1,8 +1,8 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Protest+Revolution&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,6 +23,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -51,9 +52,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -64,15 +67,17 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
 }
 
-.nav-bar{
+.nav-bar {
   display: flex;
   justify-content: space-between;
   background-color: rgb(250, 250, 250);
@@ -80,17 +85,17 @@ button:focus-visible {
   position: relative;
 }
 
-.nav-bar h1{
+.nav-bar h1 {
   font-family: "Protest Revolution", sans-serif;
   margin: 10px;
 }
 
-.nav-bar h1 span{
+.nav-bar h1 span {
   background-color: rgb(7, 145, 7);
   color: white;
 }
 
-.navbar-link a{
+.navbar-link a {
   /* margin-right: 20px; */
   margin: 10px;
   color: #333;
@@ -102,7 +107,7 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-.navbar-link a::after{
+.navbar-link a::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -115,12 +120,12 @@ button:focus-visible {
   transition: all 0.3s ease-in-out;
 }
 
-.navbar-link a:hover::after{
+.navbar-link a:hover::after {
   visibility: visible;
   transform: scaleX(1);
 }
 
-.navbar-link a:hover{
+.navbar-link a:hover {
   background-color: #ddd;
   border-radius: 3px;
 }
@@ -150,9 +155,9 @@ button:focus-visible {
 }
 
 .safari-container {
- width: 99%;
- margin-left: 7px;
- padding: 5px;
+  width: 99%;
+  margin-left: 7px;
+  padding: 5px;
 }
 
 .safari-card {
@@ -163,7 +168,7 @@ button:focus-visible {
   transition: transform 0.5s ease-out;
 }
 
-.safari-card:hover{
+.safari-card:hover {
   transform: scale(1.02);
 }
 
@@ -178,7 +183,7 @@ button:focus-visible {
   transform: scale(1.05);
 }
 
-.view-more{
+.view-more {
   margin-left: 550px;
   padding: 20px;
 }
@@ -203,26 +208,26 @@ button:focus-visible {
   }
 }
 
-.safari-content{
+.safari-content {
   text-align: center;
   margin-top: 20px;
 }
 
-.safari-content h5{
+.safari-content h5 {
   font-family: "Edu AU VIC WA NT Hand", cursive;
   color: burlywood;
   margin-top: 20px;
   padding: 10px;
 }
 
-.safari-content h3{
-  font-family:"Shantell Sans", cursive;
+.safari-content h3 {
+  font-family: "Shantell Sans", cursive;
   line-height: 20px;
   color: burlywood;
   padding: 10px;
 }
 
-.icon{
+.icon {
   color: burlywood;
   margin-right: 5px;
 }
@@ -239,39 +244,49 @@ button:focus-visible {
   margin: 2px;
   margin-bottom: 10px;
   overflow: hidden;
-  transition: transform 0.5s ease-out; /* Adds the ease-out animation */
+  transition: transform 0.5s ease-out;
+  /* Adds the ease-out animation */
 }
 
 .safari-package-card:hover {
-  transform: scale(1.02); /* Slightly enlarges the card on hover */
+  transform: scale(1.02);
+  /* Slightly enlarges the card on hover */
 }
 
 .safari-package-card img {
-  height: 200px; /* Adjust the height as needed */
-  width: 100%; /* Make the image occupy the full width of the card */
-  object-fit: cover; /* Ensures the image covers the area without being distorted */
-  transition: transform 0.5s ease-out; /* Adds the ease-out animation */
+  height: 200px;
+  /* Adjust the height as needed */
+  width: 100%;
+  /* Make the image occupy the full width of the card */
+  object-fit: cover;
+  /* Ensures the image covers the area without being distorted */
+  transition: transform 0.5s ease-out;
+  /* Adds the ease-out animation */
 }
 
 .safari-package-card img:hover {
-  transform: scale(1.05); /* Slightly zooms in the image on hover */
+  transform: scale(1.05);
+  /* Slightly zooms in the image on hover */
 }
 
 .safari-package-icon {
-  font-size: 1.2em; /* Adjust the size of the FontAwesome icons */
+  font-size: 1.2em;
+  /* Adjust the size of the FontAwesome icons */
   color: burlywood;
   margin-right: 5px;
 }
 
 
-.footer{
+.footer {
   display: flex;
   justify-content: space-around;
   position: relative;
   z-index: 2;
-  color: black; /* Adjust the text color as needed */
+  color: black;
+  /* Adjust the text color as needed */
   text-align: center;
-  padding: 50px; /* Adjust padding as needed */
+  padding: 50px;
+  /* Adjust padding as needed */
   margin: 10px;
 }
 
@@ -279,13 +294,15 @@ button:focus-visible {
   margin-top: 20px;
   position: relative;
   width: 100%;
-  height: 400px; /* Adjust the height as needed */
+  height: 400px;
+  /* Adjust the height as needed */
   overflow: hidden;
 }
 
 .background-image-container::before {
   content: "";
-  background-image: url('assets/antelope.jpg'); /* Path to your image */
+  background-image: url('assets/antelope.jpg');
+  /* Path to your image */
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -293,13 +310,15 @@ button:focus-visible {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5; /* Adjust the opacity as needed */
+  opacity: 0.5;
+  /* Adjust the opacity as needed */
   z-index: 1;
 }
 
 .footer-content {
   position: relative;
-  z-index: 2; /* Ensure content is above the background image */
+  z-index: 2;
+  /* Ensure content is above the background image */
 }
 
 .aboutus-content {
@@ -316,8 +335,8 @@ button:focus-visible {
   padding-right: 20px;
 }
 
-.content-paragraph h5{
-  font-family:"Edu AU VIC WA NT Hand", cursive;
+.content-paragraph h5 {
+  font-family: "Edu AU VIC WA NT Hand", cursive;
   color: burlywood;
 }
 
@@ -326,8 +345,8 @@ button:focus-visible {
   position: relative;
   padding: 60px 20px;
   opacity: 0.5;
-  
-  
+
+
 }
 
 .heading::before {
@@ -344,7 +363,7 @@ button:focus-visible {
   z-index: -1;
 }
 
-.heading h1{
+.heading h1 {
   font-family: "Protest Revolution", sans-serif;
   z-index: 2;
   color: black;
@@ -353,9 +372,12 @@ button:focus-visible {
 .content-image img {
   max-width: 100%;
   height: auto;
-  border-radius: 10px; /* Optional: Add rounded corners */
-  object-fit: cover; /* Maintain aspect ratio */
-  max-height: 400px; /* Set a maximum height for the image */
+  border-radius: 10px;
+  /* Optional: Add rounded corners */
+  object-fit: cover;
+  /* Maintain aspect ratio */
+  max-height: 400px;
+  /* Set a maximum height for the image */
 }
 
 
@@ -365,16 +387,17 @@ button:focus-visible {
   justify-content: space-between;
 }
 
-.contactus-heading{
+.contactus-heading {
   text-align: center;
   padding: 20px;
   font-family: "Protest Revolution", sans-serif;
   color: black;
 }
 
-.form-area, .contact-us-background-image-container {
+.form-area,
+.contact-us-background-image-container {
   flex: 1;
-  margin:20px 20px;
+  margin: 20px 20px;
 }
 
 .form-area {
@@ -384,7 +407,7 @@ button:focus-visible {
   border-radius: 5px;
 }
 
-.form-area form{
+.form-area form {
   margin: 20px;
 }
 
@@ -401,7 +424,8 @@ button:focus-visible {
 }
 
 .submit-btn {
-  background-color: burlywood; /* Replace with your desired color */
+  background-color: burlywood;
+  /* Replace with your desired color */
   color: white;
   padding: 15px 20px;
   border: none;
@@ -412,12 +436,12 @@ button:focus-visible {
   width: 100%;
 }
 
-.submit-btn:hover{
+.submit-btn:hover {
   background-color: green;
   color: white;
 }
 
-.submit-btn:active{
+.submit-btn:active {
   background-color: darkgray;
 }
 
@@ -427,17 +451,18 @@ button:focus-visible {
   border-radius: 0.25rem;
   text-align: center;
   z-index: 2;
-  color: black; /* Adjust the text color as needed */
+  color: black;
+  /* Adjust the text color as needed */
   text-align: center;
   padding: 50px;
 }
 
-.contact-info h3{
+.contact-info h3 {
   font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
-.contact-info h6{
-  font-family:"Shantell Sans", cursive;
+.contact-info h6 {
+  font-family: "Shantell Sans", cursive;
 }
 
 .contactus-socials {
@@ -453,25 +478,26 @@ button:focus-visible {
   padding: 10px;
 }
 
-.contact-icon{
+.contact-icon {
   font-size: 30px;
 }
 
-.contact-icon:hover{
+.contact-icon:hover {
   color: burlywood;
   cursor: pointer;
 }
 
-.heading-background-image-container{
+.heading-background-image-container {
   position: relative;
   width: 100%;
   height: 150px;
   margin-bottom: 10px;
 }
 
-.heading-background-image-container::before{
+.heading-background-image-container::before {
   content: "";
-  background-image: url('assets/giraffe2.jpg'); /* Path to your image */
+  background-image: url('assets/giraffe2.jpg');
+  /* Path to your image */
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -479,19 +505,21 @@ button:focus-visible {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5; /* Adjust the opacity as needed */
+  opacity: 0.5;
+  /* Adjust the opacity as needed */
   z-index: 1;
 }
 
-.contact-us-background-image-container{
+.contact-us-background-image-container {
   position: relative;
   width: 100%;
-  
+
 }
 
-.contact-us-background-image-container::before{
+.contact-us-background-image-container::before {
   content: "";
-  background-image: url('assets/zebra2.jpg'); /* Path to your image */
+  background-image: url('assets/zebra2.jpg');
+  /* Path to your image */
   background-size: cover;
   position: absolute;
   border-radius: 5px;
@@ -499,11 +527,12 @@ button:focus-visible {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.5; /* Adjust the opacity as needed */
+  opacity: 0.5;
+  /* Adjust the opacity as needed */
   z-index: 1;
 }
 
-.error-message{
+.error-message {
   color: rgb(245, 98, 98);
   margin-top: 5px;
 }
@@ -516,9 +545,11 @@ button:focus-visible {
 }
 
 .gallery-item {
-  flex: 1 1 calc(33.33% - 10px); /* Adjusts each item to take up one-third of the container's width */
+  flex: 1 1 calc(33.33% - 10px);
+  /* Adjusts each item to take up one-third of the container's width */
   box-sizing: border-box;
-  margin-bottom: 10px; /* Adds some space between rows */
+  margin-bottom: 10px;
+  /* Adds some space between rows */
   overflow: hidden;
 }
 
@@ -532,12 +563,14 @@ button:focus-visible {
 }
 
 .gallery-item img:hover {
-  transform: scale(1.05); /* Slightly scales up the image on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds a shadow effect on hover */
+  transform: scale(1.05);
+  /* Slightly scales up the image on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* Adds a shadow effect on hover */
   cursor: pointer;
 }
 
-.gallery-heading{
+.gallery-heading {
   text-align: center;
   padding: 20px;
   font-family: "Shantell Sans", cursive;
@@ -556,7 +589,8 @@ button:focus-visible {
   justify-content: center;
 }
 
-.content-paragraph, .content-image {
+.content-paragraph,
+.content-image {
   flex: 1;
   padding: 1rem;
 }
@@ -603,7 +637,7 @@ button:focus-visible {
   position: relative;
 }
 
-.safari-detail-nav a::after{
+.safari-detail-nav a::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -616,12 +650,12 @@ button:focus-visible {
   transition: all 0.3s ease-in-out;
 }
 
-.safari-detail-nav a:hover::after{
+.safari-detail-nav a:hover::after {
   visibility: visible;
   transform: scaleX(1);
 }
 
-.safari-detail-nav a:hover{
+.safari-detail-nav a:hover {
   background-color: #ddd;
   border-radius: 3px;
 }
@@ -634,18 +668,18 @@ button:focus-visible {
   font-size: 2rem;
   margin-bottom: 10px;
   color: burlywood;
- font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
-.safari-section-form{
+.safari-section-form {
   flex: 1;
   border: 1px solid burlywood;
   max-width: 50%;
-  box-shadow:rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   border-radius: 10px;
 }
 
-.safari-section-form h2{
+.safari-section-form h2 {
   color: burlywood;
   font-family: "Edu AU VIC WA NT Hand", cursive;
   margin: 10px;
@@ -665,13 +699,13 @@ button:focus-visible {
   margin-bottom: 5px;
 }
 
-.icon-detail{
+.icon-detail {
   color: burlywood;
   margin-right: 5px;
 }
 
-.accordion-header{
-  font-family:"Shantell Sans", cursive ;
+.accordion-header {
+  font-family: "Shantell Sans", cursive;
 }
 
 form {
@@ -728,27 +762,28 @@ form button:hover {
 }
 
 .payment-options-container {
-  max-width: 300px; /* Adjust the width as needed */
+  max-width: 300px;
+  /* Adjust the width as needed */
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
 }
 
-.form-check input{
+.form-check input {
   width: 20px;
   border-radius: 100px;
 }
 
-.form-input-content{
+.form-input-content {
   display: flex;
   justify-content: space-between;
   align-items: start;
 }
 
-.safari-map-content{
+.safari-map-content {
   display: flex;
   justify-content: space-between;
-  margin:10px;
+  margin: 10px;
 }
 
 .safari-section-map {
@@ -756,11 +791,11 @@ form button:hover {
   margin-right: 5px;
 }
 
-.safari-section-map h2{
+.safari-section-map h2 {
   font-size: 2rem;
   margin-bottom: 10px;
   color: burlywood;
- font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
 .safari-detail-content-section {
@@ -778,7 +813,7 @@ form button:hover {
   display: contents;
 }
 
-.safari-detail-contents .row-content h6{
+.safari-detail-contents .row-content h6 {
   margin: 0;
   font-weight: bold;
   display: flex;
@@ -789,16 +824,16 @@ form button:hover {
   margin: 5px 0 0 0;
 }
 
-.safari-detail-content .row-content h6, 
+.safari-detail-content .row-content h6,
 .safari-detail-content .row-content p {
   flex: 1;
 }
 
-.row-content h6{
+.row-content h6 {
   color: silver;
 }
 
-.row-content{
+.row-content {
   margin: 15px;
 }
 
@@ -820,7 +855,7 @@ form button:hover {
   opacity: 0.9;
 }
 
-.login-right{
+.login-right {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -842,7 +877,7 @@ form button:hover {
   margin-bottom: 1rem;
 }
 
-.brand-title span{
+.brand-title span {
   background-color: rgb(7, 145, 7);
   color: white;
   border-radius: 2px;
@@ -883,12 +918,14 @@ form button:hover {
 
 .password-container {
   position: relative;
-  width: 100%; /* Ensure full width of the input */
+  width: 100%;
+  /* Ensure full width of the input */
 }
 
 .password-input {
   width: 100%;
-  padding-right: 40px; /* Add padding to avoid overlap with the icon */
+  padding-right: 40px;
+  /* Add padding to avoid overlap with the icon */
   padding-left: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -945,7 +982,8 @@ form button:hover {
   text-align: center;
 }
 
-.divider::before, .divider::after {
+.divider::before,
+.divider::after {
   content: '';
   width: 40%;
   height: 1px;
@@ -961,7 +999,7 @@ form button:hover {
 }
 
 .divider::after {
-right: 0;
+  right: 0;
 }
 
 .btn-google {
@@ -1006,7 +1044,7 @@ right: 0;
   flex-wrap: wrap;
   overflow: hidden;
   padding: 0;
-  
+
 }
 
 .register-left {
@@ -1021,10 +1059,10 @@ right: 0;
   width: 100%;
   height: 100%;
   max-height: 100vh;
-  
+
 }
 
-.register-right{
+.register-right {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -1035,10 +1073,10 @@ right: 0;
   height: 100vh;
   overflow: hidden;
   max-height: 100vh;
- 
+
 }
 
-.register-form-container{
+.register-form-container {
   max-width: 400px;
   width: 80%;
   text-align: center;
@@ -1047,7 +1085,7 @@ right: 0;
   max-height: 80vh;
   overflow-y: auto;
   font-size: 0.9rem;
-  
+
 }
 
 .register-title {
@@ -1061,7 +1099,7 @@ right: 0;
   text-align: left;
 }
 
-.form-content{
+.form-content {
   position: relative;
   margin-bottom: 20px;
 }
@@ -1083,7 +1121,8 @@ right: 0;
 }
 
 .form-control:focus {
-  border-color: #329673; /* Highlight border on focus */
+  border-color: #329673;
+  /* Highlight border on focus */
   outline: none;
 }
 
@@ -1114,7 +1153,7 @@ input.form-control {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  
+
 }
 
 .main-section {
@@ -1129,7 +1168,10 @@ input.form-control {
   border-radius: 10px;
 }
 
-.profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+.profile-info h2,
+.graph-section h2,
+.booked-safaris h2,
+.reviews-section h2 {
   color: #029132;
   margin-bottom: 15px;
 }
@@ -1155,7 +1197,8 @@ input.form-control {
 
 .input-fieldy {
   width: 100%;
-  padding-right: 40px; /* Add padding to make space for the icon */
+  padding-right: 40px;
+  /* Add padding to make space for the icon */
   padding: 10px;
   border: 1px solid #029132;
   border-radius: 5px;
@@ -1201,17 +1244,17 @@ input.form-control {
 }
 
 
-.row-contenty h6{
+.row-contenty h6 {
   color: silver;
 }
 
 .graph-placeholder .row-contenty h6,
-.graph-placeholder .row-contenty p{
+.graph-placeholder .row-contenty p {
   margin: 0;
   font-size: 1rem;
 }
 
-.row-contenty{
+.row-contenty {
   margin: 10px;
   word-wrap: break-word;
 }
@@ -1225,7 +1268,8 @@ input.form-control {
   padding: 10px;
 }
 
-.safari-cardy, .review-card {
+.safari-cardy,
+.review-card {
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
@@ -1234,15 +1278,17 @@ input.form-control {
   margin-bottom: 10px;
 }
 
-.safari-cardy:hover, .review-card:hover {
-  transform: translateY(-3px); 
+.safari-cardy:hover,
+.review-card:hover {
+  transform: translateY(-3px);
 }
 
-.safari-cardy p, .review-card p {
+.safari-cardy p,
+.review-card p {
   margin: 5px 0;
 }
 
-.booking-paragraph{
+.booking-paragraph {
   font-size: 1.2rem;
   color: #555;
   text-align: center;
@@ -1262,7 +1308,8 @@ input.form-control {
   background-color: #027a24;
 }
 
-.safari-cardy button, .review-card button {
+.safari-cardy button,
+.review-card button {
   background-color: #029132;
 }
 
@@ -1298,11 +1345,13 @@ input.form-control {
 }
 
 .reviews-container {
-  flex: 1; /* Take available space */
+  flex: 1;
+  /* Take available space */
   max-width: 45%;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
   min-height: 300px;
   overflow: auto;
   border: 1px solid burlywood;
@@ -1335,7 +1384,8 @@ input.form-control {
 
 .review-rating {
   font-size: 16px;
-  color: grey; /* Rating in a golden color */
+  color: grey;
+  /* Rating in a golden color */
   margin-bottom: 10px;
 }
 
@@ -1351,9 +1401,9 @@ input.form-control {
   text-align: right;
 }
 
-.reviews-container h2{
+.reviews-container h2 {
   color: burlywood;
- font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
 }
 
 .review p {
@@ -1361,53 +1411,51 @@ input.form-control {
   line-height: 1.6;
 }
 
-.payment-container {
+.payment-page-container {
   display: flex;
-  width: 100%;
   height: 100vh;
-  box-sizing: border-box;
-  background-color: #f4f4f4;
-  overflow: hidden;
+  /* justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* width: 100%; */
+  /* box-sizing: border-box;
+  overflow: hidden; */
 }
 
 .image-section {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
 }
 
 .payment-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* border-radius: 8px; */
 }
 
-.price {
-  font-size: 24px;
-  font-weight: bold;
-  color: #029132;
-}
-
-.form-section {
+.payment-form-wrapper {
   flex: 1;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  padding: 40px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
 }
 
-.form-section h1{
+.payment-form-container {
+  max-width: 400px;
+  width: 100%;
   text-align: center;
 }
 
-.form-section h2{
+.payment-form-container h1 {
+  text-align: center;
+}
+
+.payment-form-container h2 {
   color: #029132;
- font-family: "Edu AU VIC WA NT Hand", cursive;
+  font-family: "Edu AU VIC WA NT Hand", cursive;
+  text-align: left;
 }
 
 .payment-options {
@@ -1429,16 +1477,22 @@ input.form-control {
 
 .payment-form-content {
   flex-grow: 1;
-  margin-top: 2px;
+  margin-top: 20px;
 }
 
-.mpesa-form, .paypal-form {
-  margin-top: 20px;
+.mpesa-form,
+.paypal-form {
+  margin-top: 10px;
   max-width: 400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+}
+
+.mpesa-form label,
+.paypal-form label {
+  text-align: left;
 }
 
 .card-details {
@@ -1447,32 +1501,38 @@ input.form-control {
   gap: 10px;
 }
 
-.mpesa-form input[type="text"], .paypal-form input[type="text"] {
-  padding: 10px;
-  /* margin-top: 5px;
-  margin-bottom: 15px; */
+.mpesa-form input[type="text"],
+.paypal-form input[type="text"] {
+  padding: 9px;
+  margin-top: 2px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 5px;
   width: 100%;
 }
 
 .payment-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-.back-btn, .confirm-btn {
+.back-btn,
+.confirm-btn {
   flex: 1;
   margin-right: 10px;
-  padding: 10px;
+  padding: 2px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .back-btn {
-  background-color:  lightgray;
+  background-color: lightgray;
+}
+
+.back-btn:hover {
+  background-color: #857d7d;
 }
 
 .confirm-btn {
@@ -1484,17 +1544,112 @@ input.form-control {
   background-color: #026b28;
 }
 
+.confirm-btn:active {
+  background-color: #80ffd2;
+}
+
+.forgot-password-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #d6f4c4e7, #02572d);
+}
+
+.left-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-section h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.left-section p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+.password-reset-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.password-reset-form label {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.password-reset-form input {
+  border: none;
+  border-bottom: 2px solid #000;
+  outline: none;
+  padding: 10px 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.reset-button {
+  background-color: #047d32d0;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 200px;
+  transition: background-color 0.3s ease;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reset-button:hover {
+  background-color: #056017;
+}
+
+.arrow {
+  margin-left: 10px;
+  font-size: 20px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.reset-button:hover .arrow {
+  transform: translateX(5px);
+  opacity: 1;
+}
+
+.right-sectiony {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 768px) {
+
   .content-paragraph,
   .content-image {
-      padding: 0.5rem;
+    padding: 0.5rem;
   }
 }
 
 @media (max-width: 576px) {
+
   .content-paragraph,
   .content-image {
-      flex-basis: 100%;
+    flex-basis: 100%;
   }
 }
 
@@ -1511,13 +1666,13 @@ input.form-control {
 
 @media (max-width: 768px) {
   .gallery-item {
-      flex: 1 1 calc(50% - 1rem);
+    flex: 1 1 calc(50% - 1rem);
   }
 }
 
 @media (max-width: 576px) {
   .gallery-item {
-      flex: 1 1 100%;
+    flex: 1 1 100%;
   }
 }
 
@@ -1534,16 +1689,18 @@ input.form-control {
 }
 
 @media (max-width: 768px) {
+
   .form-area,
   .contact-us-background-image-container {
-      padding: 0.5rem;
+    padding: 0.5rem;
   }
 }
 
 @media (max-width: 576px) {
+
   .form-area,
   .contact-us-background-image-container {
-      flex-basis: 100%;
+    flex-basis: 100%;
   }
 }
 
@@ -1558,16 +1715,25 @@ input.form-control {
   padding: 2rem;
 }
 
-.footer-contact-info, .destinations, .activities, .trip-types {
+.footer-contact-info,
+.destinations,
+.activities,
+.trip-types {
   flex: 1;
   margin: 0 1rem;
 }
 
-.footer-contact-info h5, .destinations h5, .activities h5, .trip-types h5 {
+.footer-contact-info h5,
+.destinations h5,
+.activities h5,
+.trip-types h5 {
   margin-bottom: 1rem;
 }
 
-.footer-contact-info p, .destinations p, .activities p, .trip-types p {
+.footer-contact-info p,
+.destinations p,
+.activities p,
+.trip-types p {
   margin-bottom: 0.5rem;
 }
 
@@ -1575,19 +1741,26 @@ input.form-control {
 
 @media (max-width: 768px) {
   .footer {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
   }
-  
-  .footer-contact-info, .destinations, .activities, .trip-types {
-      margin: 1rem 0;
+
+  .footer-contact-info,
+  .destinations,
+  .activities,
+  .trip-types {
+    margin: 1rem 0;
   }
 }
 
 @media (max-width: 576px) {
-  .footer-contact-info, .destinations, .activities, .trip-types {
-      flex-basis: 100%;
-      margin: 0;
+
+  .footer-contact-info,
+  .destinations,
+  .activities,
+  .trip-types {
+    flex-basis: 100%;
+    margin: 0;
   }
 }
 
@@ -1606,11 +1779,11 @@ input.form-control {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .safari-detail-nav a {
     margin-bottom: 10px;
   }
-  
+
   .safari-section-form .form-input-content {
     display: block;
   }
@@ -1620,18 +1793,22 @@ input.form-control {
   .safari-map-content {
     flex-direction: column;
   }
+
   .safari-section-map {
     margin-right: 0;
     margin-bottom: 20px;
   }
+
   .safari-detail-content-section {
     margin: 20px;
     padding: 10px;
   }
+
   .safari-detail-nav {
     flex-direction: column;
     align-items: center;
   }
+
   .safari-detail-nav a {
     margin-bottom: 10px;
   }
@@ -1639,10 +1816,12 @@ input.form-control {
   .safari-section-form .form-input-content {
     display: block;
   }
+
   .safari-section-form .form-group {
     width: 100%;
   }
-  .safari-section-form{
+
+  .safari-section-form {
     margin-left: 0;
   }
 }
@@ -1698,113 +1877,114 @@ input.form-control {
 
 @media (max-width: 992px) {
   .login-page {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .login-left {
-      flex: 1;
-      height: 40vh;
+    flex: 1;
+    height: 40vh;
   }
 
   .login-right {
-      flex: 1;
-      padding: 1.5rem;
+    flex: 1;
+    padding: 1.5rem;
   }
 
   .login-form-container {
-      max-width: 90%;
+    max-width: 90%;
   }
 
   .brand-title {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 
   .login-form h3 {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .login-left {
-      display: none;
+    display: none;
   }
 
   .login-right {
-      width: 100%;
-      padding: 1rem;
+    width: 100%;
+    padding: 1rem;
   }
 
   .login-form-container {
-      max-width: 90%;
+    max-width: 90%;
   }
 
   .brand-title {
-      font-size: 1.8rem;
+    font-size: 1.8rem;
   }
 
   .login-form h3 {
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
   }
 
   .form-group input {
-      padding: 10px;
-      font-size: 0.9rem;
+    padding: 10px;
+    font-size: 0.9rem;
   }
 
   .btn-login {
-      padding: 10px;
-      font-size: 0.9rem;
+    padding: 10px;
+    font-size: 0.9rem;
   }
 
-  .divider::before, .divider::after {
-      width: 35%;
+  .divider::before,
+  .divider::after {
+    width: 35%;
   }
 
   .btn-google {
-      padding: 10px;
-      font-size: 0.9rem;
+    padding: 10px;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 768px) {
   .register-page {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .register-left {
-      display: none;
+    display: none;
   }
 
   .register-right {
-      flex: 1;
-      padding: 1rem;
-      justify-content: center;
+    flex: 1;
+    padding: 1rem;
+    justify-content: center;
   }
 
   .register-form-container {
-      width: 100%;
-      max-width: 100%;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
 
 @media (max-width: 480px) {
   .register-right {
-      padding: 0.5rem;
+    padding: 0.5rem;
   }
 
   .register-form-container {
-      max-width: 100%;
+    max-width: 100%;
   }
 
   .register-title {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .form-control {
-      font-size: 1rem;
+    font-size: 1rem;
   }
 }
 
@@ -1815,17 +1995,20 @@ input.form-control {
     padding: 10px;
   }
 
-  .main-section, .right-section {
+  .main-section,
+  .right-section {
     width: 100%;
     margin-bottom: 20px;
   }
 
   .profile-info form {
-    grid-template-columns: 1fr; /* Single column on smaller screens */
+    grid-template-columns: 1fr;
+    /* Single column on smaller screens */
   }
 
   .graph-placeholder {
-    grid-template-columns: repeat(2, 1fr); /* Adjust grid layout for the graph */
+    grid-template-columns: repeat(2, 1fr);
+    /* Adjust grid layout for the graph */
   }
 }
 
@@ -1834,20 +2017,25 @@ input.form-control {
     padding: 5px;
   }
 
-  .main-section, .right-section {
+  .main-section,
+  .right-section {
     padding: 10px;
   }
 
   .graph-placeholder {
-    grid-template-columns: 1fr; /* Single column on mobile */
-    font-size: 0.9rem; /* Smaller font for mobile */
+    grid-template-columns: 1fr;
+    /* Single column on mobile */
+    font-size: 0.9rem;
+    /* Smaller font for mobile */
   }
 
-  .input-field, .input-fieldy {
+  .input-field,
+  .input-fieldy {
     padding: 8px;
   }
 
-  .profile-button, .logout-button {
+  .profile-button,
+  .logout-button {
     padding: 8px;
     font-size: 14px;
   }
@@ -1861,7 +2049,10 @@ input.form-control {
     margin: 5px 0;
   }
 
-  .profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+  .profile-info h2,
+  .graph-section h2,
+  .booked-safaris h2,
+  .reviews-section h2 {
     font-size: 1.2rem;
   }
 
@@ -1872,19 +2063,26 @@ input.form-control {
 }
 
 @media screen and (max-width: 480px) {
-  .profile-info h2, .graph-section h2, .booked-safaris h2, .reviews-section h2 {
+
+  .profile-info h2,
+  .graph-section h2,
+  .booked-safaris h2,
+  .reviews-section h2 {
     font-size: 1rem;
   }
 
-  .input-field, .input-fieldy {
+  .input-field,
+  .input-fieldy {
     padding: 6px;
   }
 
-  .profile-button, .logout-button {
+  .profile-button,
+  .logout-button {
     font-size: 12px;
   }
 
-  .safari-cardy, .review-card {
+  .safari-cardy,
+  .review-card {
     padding: 15px;
     font-size: 0.85rem;
   }
@@ -1894,24 +2092,30 @@ input.form-control {
   }
 
   .row-contenty h6 {
-    font-size: 1rem; /* Adjust heading size */
+    font-size: 1rem;
+    /* Adjust heading size */
   }
 }
 
 @media (max-width: 1024px) {
   .booking-reviews-container {
-    flex-direction: column; /* Stack the form and reviews vertically */
+    flex-direction: column;
+    /* Stack the form and reviews vertically */
     padding: 15px;
     gap: 20px;
   }
 
-  .safari-section-form, .reviews-container {
-    max-width: 100%; /* Take full width */
-    margin-bottom: 30px; /* Add space between form and reviews */
+  .safari-section-form,
+  .reviews-container {
+    max-width: 100%;
+    /* Take full width */
+    margin-bottom: 30px;
+    /* Add space between form and reviews */
   }
 
   .reviews-list {
-    gap: 10px; /* Reduce gap between reviews */
+    gap: 10px;
+    /* Reduce gap between reviews */
   }
 
   .reviews-container {
@@ -1919,28 +2123,35 @@ input.form-control {
     width: 100%;
   }
 
-  .booking-form-container{
+  .booking-form-container {
     width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .form-input-content {
-    flex-direction: column; /* Stack input fields vertically */
+    flex-direction: column;
+    /* Stack input fields vertically */
   }
 
-  .form-group input, .form-group select, .form-group textarea {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
     width: 100%;
-    font-size: 14px; /* Adjust input sizes for small screens */
+    font-size: 14px;
+    /* Adjust input sizes for small screens */
   }
 
-  .booking-form-container, .reviews-container {
+  .booking-form-container,
+  .reviews-container {
     padding: 15px;
     width: 100%;
   }
 
-  .submit-btn, .btn {
-    width: 100%; /* Make buttons full width on small screens */
+  .submit-btn,
+  .btn {
+    width: 100%;
+    /* Make buttons full width on small screens */
   }
 }
 
@@ -1949,15 +2160,18 @@ input.form-control {
     padding: 10px;
   }
 
-  .safari-section-form h2, .reviews-container h2 {
-    font-size: 18px; /* Make headings smaller for mobile */
+  .safari-section-form h2,
+  .reviews-container h2 {
+    font-size: 18px;
+    /* Make headings smaller for mobile */
   }
 
   .form-group label {
     font-size: 14px;
   }
 
-  .form-group input, .form-group textarea {
+  .form-group input,
+  .form-group textarea {
     font-size: 12px;
   }
 
@@ -1969,11 +2183,13 @@ input.form-control {
   }
 
   .reviews-list {
-    gap: 10px; /* Reduce space between reviews */
+    gap: 10px;
+    /* Reduce space between reviews */
   }
 
   .review-cardy {
-    padding: 10px; /* Reduce padding on mobile */
+    padding: 10px;
+    /* Reduce padding on mobile */
   }
 
   .review-username {
@@ -1990,6 +2206,150 @@ input.form-control {
   }
 
   .safari-section-form {
-    margin-bottom: 20px; /* Space between the form and reviews */
+    margin-bottom: 20px;
+    /* Space between the form and reviews */
+  }
+}
+
+@media (max-width: 992px) {
+  .payment-page-container {
+    flex-direction: column;
+  }
+
+  .image-section {
+    flex: 1;
+    height: 40vh;
+  }
+
+  .payment-form-wrapper {
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  .payment-form-container {
+    max-width: 90%;
+  }
+
+  .payment-form-container h2 {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .image-section {
+    display: none;
+  }
+
+  .payment-form-wrapper {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .payment-form-container {
+    max-width: 90%;
+  }
+
+  .mpesa-form input, .paypal-form input {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .back-btn, .confirm-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .payment-form-wrapper {
+    padding: 0.5rem;
+  }
+
+  .payment-form-container {
+    max-width: 100%;
+  }
+
+  .mpesa-form input[type="text"],
+  .paypal-form input[type="text"] {
+    padding: 0.6rem;
+  }
+
+  .back-btn,
+  .confirm-btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .card-details {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 992px) {
+  .forgot-password-container {
+    flex-direction: column;
+  }
+
+  .left-section {
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  .right-sectiony {
+    flex: 1;
+    height: 40vh;
+  }
+
+  .password-reset-form {
+    max-width: 90%;
+  }
+
+  .left-section h1 {
+    font-size: 2rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .right-sectiony {
+    display: none;
+  }
+
+  .forgot-password-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .left-section {
+    padding: 20px;
+  }
+
+  .password-reset-form input {
+    font-size: 14px;
+  }
+
+  .reset-button {
+    max-width: 100%; /* Make button stretch on small screens */
+  }
+}
+
+@media (min-width: 769px) {
+  .forgot-password-container {
+    flex-direction: row; /* Ensures the original row layout for larger screens */
+  }
+
+  .right-sectiony {
+    display: flex; /* Make sure the image reappears on larger screens */
+  }
+
+  .left-section {
+    padding: 40px;
+  }
+
+  .reset-button {
+    max-width: 200px; /* Keep button compact on larger screens */
   }
 }

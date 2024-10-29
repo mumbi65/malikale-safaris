@@ -19,10 +19,10 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError({identifier: '', password: ''})
+        setError({ identifier: '', password: '' })
         setLoading(true)
         try {
-            await loginFormSchema.validate({identifier, password}, { abortEarly: false })
+            await loginFormSchema.validate({ identifier, password }, { abortEarly: false })
 
             const response = await axios.post("http://127.0.0.1:8000/api/auth/login/", {
                 username: identifier,
@@ -38,10 +38,10 @@ const Login = () => {
                 });
                 setError(newErrors);
             } else {
-                setError("Invalid credentials"); 
+                setError("Invalid credentials");
             }
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     }
 
@@ -62,32 +62,32 @@ const Login = () => {
                                     placeholder="Username or Email"
                                     value={identifier}
                                     onChange={(e) => setIdentifier(e.target.value)} className="form-control"
-                                    />
-                                    {error.identifier && <div className="error-message">{error.identifier}</div>}
+                                />
+                                {error.identifier && <div className="error-message">{error.identifier}</div>}
                             </div>
                             <div className="mb-3 form-group">
                                 <label htmlFor="password" class="form-label">Password</label>
                                 <div className="password-container">
-                                <input 
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)} 
-                                    className="password-input"
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="password-input"
                                     />
-                                <span
-                                    className="password-toggle"
-                                    onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
-                                </span>
-                                {error.password && <div className="error-message">{error.password}</div>}
+                                    <span
+                                        className="password-toggle"
+                                        onClick={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                                    </span>
+                                    {error.password && <div className="error-message">{error.password}</div>}
                                 </div>
                             </div>
                             <div className="forgot-password">
-                                <a href="/forgot-password">Forgot Password?</a>
+                                <Link to="/forgotPassword">Forgot Password?</Link>
                             </div>
                             <button type="submit" class="btn-login" disabled={loading}>
-                                {loading ? <BeatLoader color="white"/>: "Sign In"}
+                                {loading ? <BeatLoader color="white" /> : "Sign In"}
                             </button>
                             {typeof error === "string" && <div className="error-message">{error}</div>}
                         </form>
@@ -99,7 +99,7 @@ const Login = () => {
                 </div>
 
             </div>
-           
+
         </>
     )
 }

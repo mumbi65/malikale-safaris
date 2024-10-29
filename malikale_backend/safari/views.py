@@ -1,14 +1,20 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import SafariPackage, Review, Booking
+from .models import SafariPackage, Review, Booking, Payment
 from .serializers import SafariPackageSerializer, ReviewSerializer, BookingSerializer, BookingDetailSerializer
 from rest_framework import generics, permissions, status
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from requests.auth import HTTPBasicAuth
 import requests
+import base64
+from datetime import datetime
+from django_daraja.mpesa.core import MpesaClient
+from django.views.decorators.csrf import csrf_exempt
+import json
+from requests.structures import CaseInsensitiveDict
 
 # Create your views here.
 
@@ -108,30 +114,109 @@ class UserBookingsView(generics.ListAPIView):
     
 
 # safaricom mpesa logic
-def generate_token():
-    consumer_key = "M49wGG9HSiKNcGOHAsBU6xuyGBNAWMLiRsMsnuL0FEzyft3U"
-    consumer_secret = "1N0mt5zTTthAKjbnTgzwd2aoUubQTCt9VIcrjFYHRNnkuTMGy6qyOk53RoQKjyAi"
-    url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-    response = requests.get(url, auth=HTTPBasicAuth(consumer_key, consumer_secret))
-    return response.json().get('access_token')
+
+mpesa_client = MpesaClient()
+
+@csrf_exempt
+def stk_push_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            phone_number = data.get('phone_number')
+            amount = data.get('amount', 1)
+
+            response = mpesa_client.stk_push(
+                phone_number=phone_number,
+                amount=amount,
+                account_reference='Safari Payment',
+                transaction_desc='Payment for Safari',
+                callback_url='https://charming-crane-visually.ngrok-free.app/safari/daraja/callback/'
+            )
+
+            return JsonResponse({
+                'status_code': response.status_code,
+                'content': response.content.decode('utf-8')
+            }, status=200)
+
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
+@csrf_exempt
+def mpesa_callback(request):
+    if request.method == 'POST':
+        try:
+            print("Callback received")
+            data = json.loads(request.body.decode('utf-8'))
+            print(data)
+            result_code = data['Body']['stkCallback']['ResultCode']
+            result_desc = data['Body']['stkCallback']['ResultDesc']
 
-def stk_push(amount, phone_number, callback_url):
-    access_token = generate_token()
-    headers = {
-        "Authorization": f"Bearer {access_token}"
-    }
-    payload = {
-        "BusinessShortCode": "174379",
-        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTYwMjE2MTY1NjI3",
-        "Timestamp":"20160216165627",
-        "TransactionType": "CustomerPayBillOnline",
-        "Amount": amount,
-        "PartyA": phone_number,
-        "PartyB": "174379",
-        "PhoneNumber": phone_number,
-        "CallBackURL": "",
-        "AccountReference":"Test",    
-        "TransactionDesc":"Test"
-    }
+            if result_code == 0:
+                items = data['Body']['stkCallback']['CallbackMetadata']['Item']
+                receipt_number = next(item['Value'] for item in items if item['Name'] == 'MpesaReceiptNumber')
+                phone_number = next(item['Value'] for item in items if item['Name'] == 'PhoneNumber')
+
+                payment = Payment.objects.filter(phone_number=phone_number, transaction_id='').first()
+                if payment:
+                    payment.transaction_id = receipt_number
+                    payment.save()
+                    return JsonResponse({'message': 'Payment updated successfully'}, status=200)
+                return JsonResponse({'error': 'Payment not found'}, status=404)
+            elif result_code == '1032':
+                return JsonResponse({'message': 'Payment canceled by user'}, status=400)
+            else:
+                items = data['Body']['stkCallback'].get('CallbackMetadata', {}.get('Item', []))
+                phone_number = next((item['Value'] for item in data['Body']['stkCallback']['Item'] if item['Name'] == 'PhoneNumber'), None)
+                Payment.objects.create(
+                    phone_number=phone_number or 'Unknown',
+                    transaction_id='Cancelled',
+                    amount=0
+                )
+                return JsonResponse({'message': f'Transaction failed: {result_desc}'}, status=400)
+    
+        except KeyError as e:
+            return JsonResponse({'error': f'Missing field: {str(e)}'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+@csrf_exempt
+def save_payment(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            safari_name = data.get('safari_name')
+
+            safari = SafariPackage.objects.get(title=safari_name)
+
+            Payment.objects.create(
+                safari_package = safari,
+                name=data.get('name'),
+                email=data.get('email'),
+                phone_number=data.get('phone_number'),
+                amount=data.get('amount'),
+                transaction_id=''
+            )
+            return JsonResponse({'message': 'Payment saved successfully!'}, status=201)
+        except SafariPackage.DoesNotExist:
+            return JsonResponse({'error': 'Safari package not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+@csrf_exempt
+def payment_status(request, transaction_id):
+    if request.method == 'GET':
+        try:
+            payment = Payment.objects.get(transaction_id=transaction_id)
+            return JsonResponse({'transaction_id': payment.transaction_id, 'status': 'success'}, status=200)
+        except Payment.DoesNotExist:
+            return JsonResponse({'error': 'Payment not found'}, status=404)
+    
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
