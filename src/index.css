@@ -1153,7 +1153,6 @@ input.form-control {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-
 }
 
 .main-section {
@@ -1520,7 +1519,7 @@ input.form-control {
 .confirm-btn {
   flex: 1;
   margin-right: 10px;
-  padding: 2px;
+  padding: 8px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -1544,9 +1543,6 @@ input.form-control {
   background-color: #026b28;
 }
 
-.confirm-btn:active {
-  background-color: #80ffd2;
-}
 
 .forgot-password-container {
   display: flex;

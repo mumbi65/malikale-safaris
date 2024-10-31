@@ -53,14 +53,29 @@ class Booking(models.Model):
 
 
 
-class Payment(models.Model):
+class MpesaPayment(models.Model):
     safari_package = models.ForeignKey(SafariPackage, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_id = models.CharField(max_length=50)
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    checkout_request_id = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} - {self.phone_number}"
+    
+
+class PayPalPayment(models.Model):
+    order_id = models.CharField(max_length=100, unique=True)
+    payer_id = models.CharField(max_length=100)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=3, default='USD')
+    status = models.CharField(max_length=50)
+    buyer_first_name = models.CharField(max_length=50)
+    buyer_last_name = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.buyer_first_name} - {self.order_id} - {self.status}"

@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import SafariPackage, Review, Booking, Payment
+from .models import SafariPackage, Review, Booking, MpesaPayment, PayPalPayment
 from .serializers import SafariPackageSerializer, ReviewSerializer, BookingSerializer, BookingDetailSerializer
 from rest_framework import generics, permissions, status
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from requests.auth import HTTPBasicAuth
 import requests
 import base64
@@ -15,6 +15,10 @@ from django_daraja.mpesa.core import MpesaClient
 from django.views.decorators.csrf import csrf_exempt
 import json
 from requests.structures import CaseInsensitiveDict
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
+from django.urls import reverse_lazy
+import logging
+
 
 # Create your views here.
 
@@ -113,6 +117,75 @@ class UserBookingsView(generics.ListAPIView):
         return Booking.objects.filter(user=self.request.user)
     
 
+
+
+# forgot password logic
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = 'registration/password_reset_email.html'
+    success_url = reverse_lazy('password_reset_done')
+
+    def form_valid(self, form):
+        self.send_mail(
+            subject_template_name=self.subject_template_name,
+            email_template_name=self.email_template_name,
+            context=self.get_context_data(),
+            to_email=form.cleaned_data["email"]
+        )
+        return JsonResponse({"message": "Password reset email sent successfully."})
+    
+
+class CuctomePasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy('password_reset_complete')
+
+    def form_valid(self, form):
+        form.save()
+        return JsonResponse({"message": "Password has been reset successfully."})
+    
+
+
+
+# paypal logic
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def save_paypal_payment(request):
+    if request.method == 'POST':
+        data = request.data
+        print(data)
+        logger.debug(f"Received payment data: {data}")
+
+        order_id = data.get('orderID')
+        payer_id = data.get('payerID')
+        amount = data.get('amount')
+        currency = data.get('currency')
+        status_value = data.get('status')
+        buyer_first_name = data.get('buyerFirstName')
+        buyer_last_name = data.get('buyerLastName')
+
+        if not all([order_id, payer_id, amount, currency, status_value]):
+            return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            paypalPayment = PayPalPayment.objects.create(
+                order_id=order_id,
+                payer_id=payer_id,
+                amount=amount,
+                currency=currency,
+                status=status_value,
+                buyer_first_name=buyer_first_name,
+                buyer_last_name=buyer_last_name,
+            )
+
+            logger.info("Payment saved successfully: %s", paypalPayment) 
+            return JsonResponse({"message": "Payment saved successfully"}, status=201)
+        except KeyError as e:
+            return JsonResponse({"error": f"Missing field: {str(e)}"}, status=400)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+    
+
 # safaricom mpesa logic
 
 mpesa_client = MpesaClient()
@@ -122,6 +195,15 @@ def stk_push_view(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
+            print("Incoming data:", data)
+
+            safari_package_id = data.get('safari_package_id')
+            if not safari_package_id:
+                return JsonResponse({'error': 'safari_package_id is required'}, status=400)
+
+        
+            safari_package = SafariPackage.objects.get(id=safari_package_id)
+
             phone_number = data.get('phone_number')
             amount = data.get('amount', 1)
 
@@ -133,12 +215,38 @@ def stk_push_view(request):
                 callback_url='https://charming-crane-visually.ngrok-free.app/safari/daraja/callback/'
             )
 
-            return JsonResponse({
-                'status_code': response.status_code,
-                'content': response.content.decode('utf-8')
-            }, status=200)
+            print(response.content) 
+
+            content = json.loads(response.content.decode('utf-8'))
+
+            if response.status_code == 200 and content['ResponseCode'] == '0':
+                # Save payment placeholder with CheckoutRequestID
+                MpesaPayment.objects.create(
+                    safari_package=safari_package,  
+                    name=data.get('name'),
+                    email=data.get('email'),
+                    phone_number=phone_number,
+                    amount=amount,
+                    transaction_id='',  # Empty until callback
+                    checkout_request_id=content['CheckoutRequestID']
+                )
+
+                return JsonResponse({
+                    'message': 'STK push initiated',
+                    'CheckoutRequestID': content['CheckoutRequestID'],
+                    'ResponseCode': content.get('ResponseCode') 
+                }, status=200)
+            
+            return JsonResponse({'error': content.get('CustomerMessage', 'Failed to initiate payment')}, status=400)
+        
+        except SafariPackage.DoesNotExist:
+            return JsonResponse({'error': 'Safari package not found'}, status=404)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON in Mpesa response'}, status=500)
 
         except Exception as e:
+            print(f"Error in STK Push: {e}")
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -149,33 +257,34 @@ def mpesa_callback(request):
     if request.method == 'POST':
         try:
             print("Callback received")
+            print("Raw Request Body:", request.body.decode('utf-8'))
             data = json.loads(request.body.decode('utf-8'))
-            print(data)
-            result_code = data['Body']['stkCallback']['ResultCode']
-            result_desc = data['Body']['stkCallback']['ResultDesc']
+            print("Parsed Data:", data)
+
+            if 'Body' not in data or 'stkCallback' not in data['Body']:
+                print("Invalid callback structure.")
+                return JsonResponse({'error': 'Invalid callback structure'}, status=400)
+            
+            stk_callback = data['Body']['stkCallback']
+
+            result_code = stk_callback.get('ResultCode', None)
+            result_desc = stk_callback.get('ResultDesc', '')
+            checkout_request_id = stk_callback.get('CheckoutRequestID', '')
+
+            print(f"Result Code: {result_code}, Result Description: {result_desc}")
 
             if result_code == 0:
-                items = data['Body']['stkCallback']['CallbackMetadata']['Item']
-                receipt_number = next(item['Value'] for item in items if item['Name'] == 'MpesaReceiptNumber')
-                phone_number = next(item['Value'] for item in items if item['Name'] == 'PhoneNumber')
-
-                payment = Payment.objects.filter(phone_number=phone_number, transaction_id='').first()
+                    
+                    return savePayment(stk_callback)
+            elif result_code == 1032:
+                payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id).first()
                 if payment:
-                    payment.transaction_id = receipt_number
+                    payment.status = 'canceled'
                     payment.save()
-                    return JsonResponse({'message': 'Payment updated successfully'}, status=200)
-                return JsonResponse({'error': 'Payment not found'}, status=404)
-            elif result_code == '1032':
-                return JsonResponse({'message': 'Payment canceled by user'}, status=400)
-            else:
-                items = data['Body']['stkCallback'].get('CallbackMetadata', {}.get('Item', []))
-                phone_number = next((item['Value'] for item in data['Body']['stkCallback']['Item'] if item['Name'] == 'PhoneNumber'), None)
-                Payment.objects.create(
-                    phone_number=phone_number or 'Unknown',
-                    transaction_id='Cancelled',
-                    amount=0
-                )
-                return JsonResponse({'message': f'Transaction failed: {result_desc}'}, status=400)
+
+                return JsonResponse({'message': 'Payment canceled by user', 'status': 'canceled'}, status=200)
+            
+            return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
     
         except KeyError as e:
             return JsonResponse({'error': f'Missing field: {str(e)}'}, status=400)
@@ -184,39 +293,45 @@ def mpesa_callback(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
+def savePayment(stk_callback):
+    checkout_request_id = stk_callback.get('CheckoutRequestID', '')
+    receipt_number = next(
+        (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
+    )
+
+    if receipt_number:
+                    
+        print(f"Saving receipt number: {receipt_number}")
+
+        payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id).first()
+        if payment:
+            payment.transaction_id = receipt_number
+            payment.save()
+            print(f"Updated payment: {payment}")
+            return JsonResponse({
+                'message': 'Payment updated successfully',
+                'transaction_id': receipt_number
+            }, status=200)
+        else:
+            print(f"No payment found with CheckoutRequestID: {checkout_request_id}")
+            return JsonResponse({'error': 'Payment not found'}, status=404) 
+
+    return JsonResponse({'error': 'Receipt number not found'}, status=400)     
+
+
 @csrf_exempt
-def save_payment(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-            safari_name = data.get('safari_name')
-
-            safari = SafariPackage.objects.get(title=safari_name)
-
-            Payment.objects.create(
-                safari_package = safari,
-                name=data.get('name'),
-                email=data.get('email'),
-                phone_number=data.get('phone_number'),
-                amount=data.get('amount'),
-                transaction_id=''
-            )
-            return JsonResponse({'message': 'Payment saved successfully!'}, status=201)
-        except SafariPackage.DoesNotExist:
-            return JsonResponse({'error': 'Safari package not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-        
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-
-@csrf_exempt
-def payment_status(request, transaction_id):
+def payment_status(request, checkout_request_id):
     if request.method == 'GET':
         try:
-            payment = Payment.objects.get(transaction_id=transaction_id)
-            return JsonResponse({'transaction_id': payment.transaction_id, 'status': 'success'}, status=200)
-        except Payment.DoesNotExist:
+            payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
+            if payment:
+                status = 'success' if payment.transaction_id else 'pending'
+                return JsonResponse({
+                'transaction_id': payment.transaction_id,
+                  'status': status
+                  }, status=200)
             return JsonResponse({'error': 'Payment not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
     
     return JsonResponse({'error': 'Invalid request method'}, status=405)

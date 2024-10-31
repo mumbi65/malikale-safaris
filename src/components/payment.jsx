@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useRef } from "react"
+import React, { useState, useCallback, useRef, useEffect } from "react"
 import lion from "../assets/lion4.jpg"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { useEffect } from "react"
 import { BeatLoader } from "react-spinners"
 import PaypalButton from "./paypalButton"
 
@@ -13,12 +12,15 @@ const Payment = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [amount, setAmount] = useState("")
-    const [transactionId, setTransactionId] = useState("")
+    const [transaction_id, setTransactionId] = useState("")
+    const [checkout_request_id, setCheckoutRequestId] = useState(null)
     const [isPolling, setIsPolling] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [notification, setNotification] = useState(null)
     const navigate = useNavigate()
     const { safariId } = useParams()
-    
+   
+
 
     useEffect(() => {
         let isMounted = true
@@ -27,18 +29,12 @@ const Payment = () => {
             .then((data) => {
                 if (isMounted) {
                     setSafari(data)
-
-                    const newAmount = parseInt(data.price, 10)
-                    if (newAmount !== amount) {
-                        setAmount(newAmount)
-                    }
+                    setAmount(parseInt(data.price, 10))
                 }
             })
             .catch((error) => console.error("Error fetching safari:", error))
 
-            return () => {
-                isMounted = false
-            }
+        return () => (isMounted = false)
     }, [safariId])
 
     const handlePaymentChange = (e) => {
@@ -59,25 +55,9 @@ const Payment = () => {
 
 
     const handlePayment = async () => {
-        setLoading(true)
+        setLoading(true);
+        
         try {
-            const saveResponse = await fetch("http://127.0.0.1:8000/safari/save-payment/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    safari_name: safari.title,
-                    name,
-                    email,
-                    phone_number: phoneNumber,
-                    amount: parseInt(amount, 10),
-                })
-            })
-            if (!saveResponse.ok) {
-                const saveError = await saveResponse.json()
-                alert(`Error: ${saveError.error || "Failed to save payment details"}`)
-                return
-            }
-
             const stkResponse = await fetch("http://127.0.0.1:8000/safari/daraja/stk_push/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -86,41 +66,92 @@ const Payment = () => {
                     amount: parseInt(amount, 10),
                     name,
                     email,
+                    safari_package_id: safariId,
                 }),
-            })
+            });
 
-            const stkData = await stkResponse.json()
-            if (stkResponse.ok) {
-                alert("Payment request sent. Check your phone.")
+            const stkData = await stkResponse.json();
+            console.log("STK Push Response:", stkData);
+
+            // const parsedContent = stkData?.content || {}
+            // console.log("Parsed Content:", parsedContent)
+
+            if (stkResponse.ok && stkData.ResponseCode === "0") {
+                alert("Payment request sent. Check your phone.");
+                setCheckoutRequestId(stkData.CheckoutRequestID); // Store CheckoutRequestID for tracking
+                setIsPolling(true)
+                pollTransactionStatus(stkData.CheckoutRequestID)
             } else {
-                alert(`Error: ${stkData.error || "Failed to send payment request"}`)
+                const errorMessage = stkData?.CustomerMessage || "Failed to initiate payment";
+                console.error("Unexpected response:", stkData);
+                alert(`Error: ${errorMessage}`);
             }
         } catch (error) {
-            console.error("Payment error:", error)
-            alert("Payment failed. Please try again")
+            console.error("Payment error:", error);
+            alert("Payment failed. Please try again");
         } finally {
-            setLoading(false)
+            setLoading(false);
+        }
+    };
+
+    const pollTransactionStatus = async (checkout_request_id) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/safari/payment-status/${checkout_request_id}/`);
+            const data = await response.json();
+            console.log("Polling Response:", data);
+
+            if (data.status === 'success') {
+                alert("Payment completed successfully!");
+                setIsPolling(false);
+                await savePayment(checkout_request_id)
+
+            } else if (data.status === "pending") {
+                console.log("Transaction still pending...");
+            } else {
+                alert(`Payment ${data.status.toLowerCase()}.`);
+                setIsPolling(false);
+            }
+        } catch (error) {
+            console.error("Polling error:", error);
+            setIsPolling(false);
         }
     }
 
-    useEffect(() => {
-        let interval;
-        if (isPolling) {
-            interval = setInterval(async () => {
-                try {
-                    const response = await fetch(`http://127.0.0.1:8000/safari/payment-status/${transactionId}/`)
-                    const data = await response.json()
-                    if (data.transaction_id) {
-                        setIsPolling(false)
-                        alert("Payment completed successfully!")
-                    }
-                } catch (error) {
-                    console.error("Polling error:", error)
-                }
-            }, 5000)
+    const savePayment = async (checkout_request_id) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/safari/save-payment/${checkout_request_id}/`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+            })
+            const data = await response.json()
+
+            if(response.ok){
+                console.log("Payment saved", data)
+                alert(data.message || "Payment saved successfully.")
+            } else {
+                console.error("Error saving payment:", data.error)
+                alert(data.error || "Failed to save payment")
+            }
+        } catch (error) {
+            console.error("Save payment error:", error)
         }
+    }
+
+
+    useEffect(() => {
+        let interval
+
+        if (isPolling && checkout_request_id) {
+            interval = setInterval(() => {
+                console.log(`Polling transaction: ${checkout_request_id}`);
+                pollTransactionStatus(checkout_request_id)  
+            }, 2000)
+
+        }
+
         return () => clearInterval(interval)
-    }, [isPolling, transactionId, safariId])
+    }, [isPolling, checkout_request_id, safariId])
+
 
     const handlePaymentSuccess = useCallback((details) => {
         console.log('Payment Successful:', details)
@@ -135,13 +166,15 @@ const Payment = () => {
 
     return (
         <div className="payment-page-container">
+            {/* Notification section */}
+            {notification && <div className="notification">{notification}</div>}
+
             {/* left side */}
             <div className="image-section">
                 <img src={lion} alt="payment-image" className="payment-image" />
             </div>
 
             {/* right side */}
-            {/* <div className="form-section"> */}
             <div className="payment-form-wrapper">
                 <div className="payment-form-container">
                     <h1 className="brand-title"><span>MaliKale</span> Safaris</h1>
@@ -206,11 +239,11 @@ const Payment = () => {
                             <div className="paypal-form">
                                 <label htmlFor="">
                                     Amount to Pay:
-                                     <input type="number" value={amount} readOnly />
+                                    <input type="number" value={amount} readOnly />
                                 </label>
                                 {amount > 0 && <PaypalButton amount={amount} onSuccess={handlePaymentSuccess} />}
                                 <div className="payment-buttons">
-                                    
+
                                 </div>
                             </div>
                         )}
