@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_daraja',
     'safari',
+    'channels',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -90,6 +91,17 @@ REST_FRAMEWORK = {
 }
 
 WSGI_APPLICATION = 'malikale_backend.wsgi.application'
+
+# ASGI_APPLICATION = 'malikale_backend.asgi.application'
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 8000)]
+#         }
+#     }
+# }
 
 
 # Database

@@ -73,14 +73,11 @@ const Payment = () => {
             const stkData = await stkResponse.json();
             console.log("STK Push Response:", stkData);
 
-            // const parsedContent = stkData?.content || {}
-            // console.log("Parsed Content:", parsedContent)
 
             if (stkResponse.ok && stkData.ResponseCode === "0") {
                 alert("Payment request sent. Check your phone.");
                 setCheckoutRequestId(stkData.CheckoutRequestID); // Store CheckoutRequestID for tracking
-                setIsPolling(true)
-                pollTransactionStatus(stkData.CheckoutRequestID)
+                await pollPaymentStatus(stkData.CheckoutRequestID)
             } else {
                 const errorMessage = stkData?.CustomerMessage || "Failed to initiate payment";
                 console.error("Unexpected response:", stkData);
@@ -94,63 +91,28 @@ const Payment = () => {
         }
     };
 
-    const pollTransactionStatus = async (checkout_request_id) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/safari/payment-status/${checkout_request_id}/`);
-            const data = await response.json();
-            console.log("Polling Response:", data);
 
-            if (data.status === 'success') {
-                alert("Payment completed successfully!");
-                setIsPolling(false);
-                await savePayment(checkout_request_id)
-
-            } else if (data.status === "pending") {
-                console.log("Transaction still pending...");
-            } else {
-                alert(`Payment ${data.status.toLowerCase()}.`);
-                setIsPolling(false);
-            }
-        } catch (error) {
-            console.error("Polling error:", error);
-            setIsPolling(false);
-        }
+    const pollPaymentStatus = async (checkout_request_id) => {
+        setTimeout(() => {
+            const interval = setInterval(async () => {
+                try {
+                    const response = await fetch(`http://127.0.0.1:8000/safari/payment-status/${checkout_request_id}/`);
+                    const data = await response.json();
+                    
+                    if(response.ok) {
+                        alert(data.message || "Payment saved successfully.")
+                        clearInterval(interval)
+                    } else {
+                        alert(data.error || "Failed to save payment")
+                    }
+                    
+                } catch (error) {
+                    console.error("Save payment error:", error);
+                }
+            }, 5000)
+        }, 15000)
     }
 
-    const savePayment = async (checkout_request_id) => {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/safari/save-payment/${checkout_request_id}/`, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-            })
-            const data = await response.json()
-
-            if(response.ok){
-                console.log("Payment saved", data)
-                alert(data.message || "Payment saved successfully.")
-            } else {
-                console.error("Error saving payment:", data.error)
-                alert(data.error || "Failed to save payment")
-            }
-        } catch (error) {
-            console.error("Save payment error:", error)
-        }
-    }
-
-
-    useEffect(() => {
-        let interval
-
-        if (isPolling && checkout_request_id) {
-            interval = setInterval(() => {
-                console.log(`Polling transaction: ${checkout_request_id}`);
-                pollTransactionStatus(checkout_request_id)  
-            }, 2000)
-
-        }
-
-        return () => clearInterval(interval)
-    }, [isPolling, checkout_request_id, safariId])
 
 
     const handlePaymentSuccess = useCallback((details) => {

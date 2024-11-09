@@ -9,6 +9,7 @@ from .serializers import UserRegistrationSerializer, UserProfileSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _
 
 # Create your views here.
 class UserRegistrationView(APIView):
@@ -31,10 +32,16 @@ class CustomAuthToken(ObtainAuthToken):
         password = request.data.get('password')
 
         try:
-            if "@" in identifier:
-                user = User.objects.get(email = identifier)
-            else:
+            try:
                 user = User.objects.get(username=identifier)
+            except User.DoesNotExist:
+                user = User.objects.get(email=identifier)
+
+
+            # if "@" in identifier:
+            #     user = User.objects.get(email = identifier)
+            # else:
+            #     user = User.objects.get(username=identifier)
             
             if user.check_password(password):
                 token,_=Token.objects.get_or_create(user=user)

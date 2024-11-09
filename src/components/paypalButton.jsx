@@ -22,7 +22,6 @@ const PaypalButton = React.memo(({ amount, onSuccess }) => {
                 }}
                 onApprove={async (data, actions) => {
                     const details = await actions.order.capture();
-                    console.log('Payment Successful:', details);
 
                     const buyerFirstName = details.payer?.name?.given_name || 'Unknown';
                     const buyerLastName = details.payer?.name?.surname || 'Unknown';
@@ -37,7 +36,7 @@ const PaypalButton = React.memo(({ amount, onSuccess }) => {
                         buyerFirstName: buyerFirstName,
                         buyerLastName: buyerLastName,
                     }
-                    console.log(paymentData)
+                    
 
                     fetch("http://127.0.0.1:8000/safari/save-paypal-payment/", {
                         method: 'POST',

@@ -29,7 +29,8 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
-import { BeatLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
+
 
 
 const SafariDetail = () => {
@@ -208,7 +209,11 @@ const SafariDetail = () => {
 
 
     if (loading) {
-      return <p>Loading...</p>;
+      return (
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+          <ScaleLoader color='#029132' size={50} />
+        </div>
+      )
     }
 
     if (error) {

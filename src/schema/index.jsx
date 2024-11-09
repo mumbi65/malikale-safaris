@@ -24,9 +24,8 @@ export const loginFormSchema = yup.object().shape({
         .string()
         .required("Username or email is required")
         .min(3, "Must be at least 3 characters") // Updated message for consistency
-        .matches(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, "Must be a valid email address")
-        .test('username-or-email', 'Must be a valid username or email', value => {
-            return value && (value.includes('@') || value.length >= 3);
+        .test('is-valid-identifier', 'Must be a valid username or email', value => {
+            return value && (value.includes('@') ? /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value): value.length >= 3);
         }),
     password: yup.string().required("Password is required"),
 })

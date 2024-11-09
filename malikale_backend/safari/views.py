@@ -18,6 +18,9 @@ from requests.structures import CaseInsensitiveDict
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
 import logging
+from django.utils.timezone import now
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 # Create your views here.
@@ -153,7 +156,6 @@ logger = logging.getLogger(__name__)
 def save_paypal_payment(request):
     if request.method == 'POST':
         data = request.data
-        print(data)
         logger.debug(f"Received payment data: {data}")
 
         order_id = data.get('orderID')
@@ -201,11 +203,13 @@ def stk_push_view(request):
             if not safari_package_id:
                 return JsonResponse({'error': 'safari_package_id is required'}, status=400)
 
-        
-            safari_package = SafariPackage.objects.get(id=safari_package_id)
 
             phone_number = data.get('phone_number')
             amount = data.get('amount', 1)
+            name = data.get('name')
+            email = data.get('email')
+
+            safari_package = SafariPackage.objects.get(id=safari_package_id)
 
             response = mpesa_client.stk_push(
                 phone_number=phone_number,
@@ -220,15 +224,17 @@ def stk_push_view(request):
             content = json.loads(response.content.decode('utf-8'))
 
             if response.status_code == 200 and content['ResponseCode'] == '0':
-                # Save payment placeholder with CheckoutRequestID
+                checkout_request_id = content['CheckoutRequestID']
+
                 MpesaPayment.objects.create(
-                    safari_package=safari_package,  
-                    name=data.get('name'),
-                    email=data.get('email'),
+                    safari_package=safari_package,
+                    name=name,
+                    email=email,
                     phone_number=phone_number,
                     amount=amount,
-                    transaction_id='',  # Empty until callback
-                    checkout_request_id=content['CheckoutRequestID']
+                    checkout_request_id=checkout_request_id,
+                    status='pending',
+                    # created_at=now()
                 )
 
                 return JsonResponse({
@@ -257,7 +263,6 @@ def mpesa_callback(request):
     if request.method == 'POST':
         try:
             print("Callback received")
-            print("Raw Request Body:", request.body.decode('utf-8'))
             data = json.loads(request.body.decode('utf-8'))
             print("Parsed Data:", data)
 
@@ -266,6 +271,11 @@ def mpesa_callback(request):
                 return JsonResponse({'error': 'Invalid callback structure'}, status=400)
             
             stk_callback = data['Body']['stkCallback']
+            # safari_package_id = data['Body'].get('safari_package_id')
+            # name = data.get('name')
+            # email = data.get('email')
+            # phone_number = data.get('phone_number')
+            # amount = data.get('amount')
 
             result_code = stk_callback.get('ResultCode', None)
             result_desc = stk_callback.get('ResultDesc', '')
@@ -273,63 +283,103 @@ def mpesa_callback(request):
 
             print(f"Result Code: {result_code}, Result Description: {result_desc}")
 
+            payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
+
             if result_code == 0:
-                    
-                    return savePayment(stk_callback)
+                # payment_saved = savePayment(stk_callback, safari_package_id, name, email, phone_number, amount, data)
+
+                # if payment_saved:
+                #     return JsonResponse({'message': 'Payment success notification sent'}, status=200)
+                
+                # else:
+                #     return JsonResponse({'error': 'Failed to save payment'}, status=500)
+
+                receipt_number = next(
+                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
+                )
+
+                payment.transaction_id = receipt_number
+                payment.status = 'success'
+                payment.save()
+
+                return JsonResponse({'message': 'Payment recorded successfully'}, status=200)
+            
             elif result_code == 1032:
-                payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id).first()
-                if payment:
-                    payment.status = 'canceled'
-                    payment.save()
+                payment.status = 'canceled'
+                payment.save()
 
                 return JsonResponse({'message': 'Payment canceled by user', 'status': 'canceled'}, status=200)
             
+            payment.status = 'failed'
+            payment.save()
             return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
+        
+        except MpesaPayment.DoesNotExist:
+            return JsonResponse({'error': 'Payment not found'}, status=404)
     
         except KeyError as e:
             return JsonResponse({'error': f'Missing field: {str(e)}'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+        
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 
-def savePayment(stk_callback):
-    checkout_request_id = stk_callback.get('CheckoutRequestID', '')
-    receipt_number = next(
-        (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
-    )
+# def savePayment(stk_callback, safari_package_id, name, email, phone_number, amount, data):
+#     checkout_request_id = stk_callback.get('CheckoutRequestID', '')
+#     receipt_number = next(
+#         (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
+#     )
 
-    if receipt_number:
+#     print(f"Attempting to save payment for CheckoutRequestID: {checkout_request_id}")
+
+#     if receipt_number:
+#         try:
                     
-        print(f"Saving receipt number: {receipt_number}")
+#             print("Saving receipt number: {receipt_number}")
 
-        payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id).first()
-        if payment:
-            payment.transaction_id = receipt_number
-            payment.save()
-            print(f"Updated payment: {payment}")
-            return JsonResponse({
-                'message': 'Payment updated successfully',
-                'transaction_id': receipt_number
-            }, status=200)
-        else:
-            print(f"No payment found with CheckoutRequestID: {checkout_request_id}")
-            return JsonResponse({'error': 'Payment not found'}, status=404) 
+#             if safari_package_id:
+#                 safari_package = SafariPackage.objects.get(id=safari_package_id)
+#             else:
+#                 print("Warning: safari_package_id not found in callback data")
 
-    return JsonResponse({'error': 'Receipt number not found'}, status=400)     
+#             MpesaPayment.objects.create(
+#                 safari_package=safari_package,
+#                 name=name,
+#                 email=email,
+#                 phone_number=phone_number,
+#                 amount=amount,
+#                 transaction_id=receipt_number,
+#                 checkout_request_id=checkout_request_id,
+#                 status='success'
+#             )
+
+#             print(f"Payment saved successfully for CheckoutRequestID: {checkout_request_id}")
+#             return True  # Payment saved successfully
+#         except SafariPackage.DoesNotExist:
+#             print(f"Safari package with ID {safari_package_id} does not exist.")
+#         except Exception as e:
+#             print(f"Error saving payment: {str(e)}")
+
+#     return False
+
 
 
 @csrf_exempt
 def payment_status(request, checkout_request_id):
+    print(f"Received request for checkout_request_id: {checkout_request_id}")
     if request.method == 'GET':
         try:
             payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
+            print(f"Found payment: {payment}")
             if payment:
-                status = 'success' if payment.transaction_id else 'pending'
+                # status = 'success' if payment.transaction_id else 'pending'
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
-                  'status': status
+                  'status': payment.status
                   }, status=200)
+        except MpesaPayment.DoesNotExist:
+            print(f"Payment not found for CheckoutRequestID: {checkout_request_id}")
             return JsonResponse({'error': 'Payment not found'}, status=404)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)

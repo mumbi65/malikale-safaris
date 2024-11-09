@@ -55,13 +55,14 @@ class Booking(models.Model):
 
 class MpesaPayment(models.Model):
     safari_package = models.ForeignKey(SafariPackage, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone_number = models.CharField(max_length=15)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     transaction_id = models.CharField(max_length=100, blank=True, null=True)
     checkout_request_id = models.CharField(max_length=100, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, default='pending')
 
     def __str__(self):
         return f"{self.name} - {self.phone_number}"
