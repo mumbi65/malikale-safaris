@@ -21,6 +21,8 @@ import logging
 from django.utils.timezone import now
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from django.middleware.csrf import get_token
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -123,6 +125,7 @@ class UserBookingsView(generics.ListAPIView):
 
 
 # forgot password logic
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'registration/password_reset_email.html'
     success_url = reverse_lazy('password_reset_done')
@@ -137,7 +140,7 @@ class CustomPasswordResetView(PasswordResetView):
         return JsonResponse({"message": "Password reset email sent successfully."})
     
 
-class CuctomePasswordResetConfirmView(PasswordResetConfirmView):
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy('password_reset_complete')
 
     def form_valid(self, form):
@@ -145,6 +148,9 @@ class CuctomePasswordResetConfirmView(PasswordResetConfirmView):
         return JsonResponse({"message": "Password has been reset successfully."})
     
 
+
+def csrf_token(request):
+    return JsonResponse({'csrfToken': get_token(request)})
 
 
 # paypal logic

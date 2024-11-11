@@ -1,5 +1,6 @@
 from django.urls import path, include
-from .views import SafariPackageListView, ReviewListCreateView, ReviewUpdateDeleteView, safari_detail_view, SafariReviewListView, create_booking, UserBookingsView, stk_push_view, mpesa_callback, payment_status, CuctomePasswordResetConfirmView, CustomPasswordResetView, save_paypal_payment
+from django.views.decorators.csrf import csrf_exempt
+from .views import SafariPackageListView, ReviewListCreateView, ReviewUpdateDeleteView, safari_detail_view, SafariReviewListView, create_booking, UserBookingsView, stk_push_view, mpesa_callback, payment_status, CustomPasswordResetConfirmView, CustomPasswordResetView, save_paypal_payment, csrf_token
 
 urlpatterns = [
     path('api/safari-packages/', SafariPackageListView.as_view(), name='safari-package-list'),
@@ -15,5 +16,6 @@ urlpatterns = [
     # path('save-payment/<str:checkout_request_id>/', savePayment, name='save-payment'),
     path('save-paypal-payment/', save_paypal_payment, name='save-paypal-payment'),
     path('api/password-reset/', CustomPasswordResetView.as_view(), name='password-reset'),
-    path('api/password-reset/confirm/<uidb64>/<token>/', CuctomePasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('api/password-reset/confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('csrf/', csrf_token, name='csrf-token')
 ]
