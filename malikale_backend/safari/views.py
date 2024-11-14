@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import SafariPackage, Review, Booking, MpesaPayment, PayPalPayment
-from .serializers import SafariPackageSerializer, ReviewSerializer, BookingSerializer, BookingDetailSerializer
+from .models import SafariPackage, Review, Booking, MpesaPayment, PayPalPayment, ContactMessage
+from .serializers import SafariPackageSerializer, ReviewSerializer, BookingSerializer, BookingDetailSerializer, ContactMessageSerializer
 from rest_framework import generics, permissions, status
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -123,6 +123,14 @@ class UserBookingsView(generics.ListAPIView):
     
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def contact_us(request):
+    serializer = ContactMessageSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"message": "Message sent successfully"}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # forgot password logic
 @method_decorator(csrf_exempt, name='dispatch')

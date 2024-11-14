@@ -1,21 +1,46 @@
 import React from "react";
 import cheetah from "../assets/cheetahpic.jpg"
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("")
     const [message, setMessage] = useState("")
+    const [csrfToken, setCsrfToken] = useState("")
+
+    useEffect(() => {
+        const fetchCsrfToken = async () => {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/safari/csrf/", {
+                    method: "GET",
+                    credentials: "include",
+                })
+                const data = await response.json()
+                setCsrfToken(data.csrfToken)
+                console.log('csrf Token',data.csrfToken)
+                
+            } catch (error) {
+                console.error('Error fetching CSRF token:', error);
+            }
+        }
+        fetchCsrfToken()
+    }, [])
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault()
+
+        
+        console.log("CSRF Token sent with request:", csrfToken);
+
         try { 
-            const response = await fetch("http://127.0.0.1:8000/password-reset/", {
+            const response = await fetch("http://127.0.0.1:8000/safari/api/password-reset/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "X-CSRFToken": csrfToken,
                 },
                 body: JSON.stringify({ email }),
+                credentials: "include"
             })
 
             if (response.ok) {

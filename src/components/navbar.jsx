@@ -24,7 +24,7 @@ const NavBar = () =>{
                                         <Link to="/home" className="nav-link" aria-current="page">Home</Link>
                                     </li>
                                     <li className="nav-item navbar-link">
-                                        <Link to="/aboutus" className="nav-link" >About us</Link>
+                                        <Link to="/aboutus" className="nav-link" >About Us</Link>
                                     </li>
                                     <li className="nav-item dropdown navbar-link">
                                         <a className="nav-link"  role="button" data-bs-toggle="dropdown" aria-expanded="false">

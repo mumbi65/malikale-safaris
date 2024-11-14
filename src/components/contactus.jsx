@@ -16,23 +16,29 @@ import { getDatabase, ref, set, push } from "firebase/database";
 const ContactUs = () =>{
 
     const onSubmit = async (values, {setSubmitting, resetForm}) =>{
-        const db = getDatabase(app)
-        const newDocRef = push(ref(db, "malikale-safaris/contactUs"))
-        set(newDocRef, {
-            fullname:values.fullname,
-            email: values.email,
-            subject: values.subject,
-            message: values.message
-        }).then(() =>{
-            console.log("Message Sent Successfuly")
-            alert("Message sent successfully")
-            resetForm()
-            setSubmitting(false)
-        }).catch((error) =>{
-            console.log(error)
-            alert("Error")
-            setSubmitting(false)
-        })
+        try {
+            const response = await fetch('http://127.0.0.1:8000/safari/api/contact/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            })
+            if (response.ok) {
+                const data = await response.json()
+                alert("Message sent successfully")
+                resetForm()
+            } else {
+                const errorData = await response.json()
+                console.error(errorData)
+                alert("Error:" + JSON.stringify(errorData))
+            }
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
         
     }
 
