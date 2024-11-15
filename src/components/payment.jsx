@@ -110,7 +110,7 @@ const Payment = () => {
                     console.error("Save payment error:", error);
                 }
             }, 5000)
-        }, 15000)
+        }, 30000)
     }
 
 
