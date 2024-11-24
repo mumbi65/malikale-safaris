@@ -13,6 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import environ
+
+env = environ.Env(
+    # Set default values and casting
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,18 +30,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # 'django-insecure-v*!&anbi9-1bsyqwf-u_i9h87up=fc2^h6i1^hm-c^3_ce!lkj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "True"
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'charming-crane-visually.ngrok-free.app',
-]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
 # Application definition
@@ -117,8 +121,8 @@ DATABASES = {
     }
 }
 
-database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(database_url)
+
+DATABASES["default"] = env.db("DATABASE_URL")
 
 # postgresql://malikale_database_user:Myj8lmXH3JaJazPjUK9wL5K0YWSbKNFA@dpg-csve62u8ii6s73erjmb0-a.oregon-postgres.render.com/malikale_database
 
