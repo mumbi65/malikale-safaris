@@ -15,7 +15,7 @@ import { useSafari } from "./safaricontext";
 
 
 const SafariCard = () => {
-  const {safaris} = useSafari()
+  const { mapData } = useSafari()
 
   return (
     <div className="row justify-content-around safari-container">
@@ -24,7 +24,7 @@ const SafariCard = () => {
         <h2>Explore popular Safaris</h2>
         <h3>Get started with handpicked top rated trips</h3>
       </div>
-      {safaris.map((safari) => (
+      {mapData.map((safari) => (
         
           <div className="card col-md-3 safari-card" key={safari.id}>
             <img src={safari.image} className="card-img-top" alt="..." />

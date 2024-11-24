@@ -26,6 +26,9 @@ from django.utils.decorators import method_decorator
 
 
 # Create your views here.
+def safari_list_view(request):
+    safaris = SafariPackage.objects.all().values('id', 'title')
+    return JsonResponse(list(safaris), safe=False)
 
 def safari_detail_view(request, safariId):
     try:

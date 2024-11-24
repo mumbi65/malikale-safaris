@@ -1,6 +1,6 @@
 // SafariDetail.js
-import React, { useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import NavBar from './navbar';
 import Footer from './footer';
 import { Accordion, Card } from 'react-bootstrap';
@@ -8,27 +8,16 @@ import { useSafari } from './safaricontext';
 import { Collapse } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { faBus } from '@fortawesome/free-solid-svg-icons';
-import { faBed } from '@fortawesome/free-solid-svg-icons';
-import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import { faBus, faBed, faPlane, faPersonHiking, faUtensils, faLanguage, faPersonRunning, faUsers, faPersonCane, faChild  } from '@fortawesome/free-solid-svg-icons';
 import { faSoundcloud } from '@fortawesome/free-brands-svg-icons';
-import { faPersonHiking } from '@fortawesome/free-solid-svg-icons';
-import { faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { faLanguage } from '@fortawesome/free-solid-svg-icons';
-import { faPersonRunning } from '@fortawesome/free-solid-svg-icons';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { faPersonCane } from '@fortawesome/free-solid-svg-icons';
-import { faChild } from '@fortawesome/free-solid-svg-icons';
 import { useFormik } from 'formik';
 import { bookingFormSchema } from '../schema';
 import app from '../firebaseconfig';
 import { getDatabase, ref, set, push } from 'firebase/database';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate } from 'react-router-dom';
 import { ScaleLoader } from 'react-spinners';
 
 
@@ -41,10 +30,11 @@ const SafariDetail = () => {
   const [reviews, setReviews] = useState([])
   const [loadingReviews, setLoadingReviews] = useState(false)
   const [safariLoading, setSafariLoading] = useState(false)
-  const navigate = useNavigate()
 
-  const { safaris } = useSafari()
-  const contextSafari = safaris.find(s => s.id === parseInt(safariId))
+  const { mapData } = useSafari()
+  const navigate = useNavigate()
+  const contextSafari = mapData.find(s => s.id === parseInt(safariId))
+  const mapEmbedUrl = contextSafari?.mapEmbedUrl
 
   const imageUrl = `http://127.0.0.1:8000${safari?.image2}`;
 
@@ -52,8 +42,9 @@ const SafariDetail = () => {
   const fetchSafariDetails = async () => {
     if (safariId) {
       try {
+        console.log("Fetching safari details for ID:", safariId)
         const safariResponse = await axios.get(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
-
+        console.log("Safari details fetched:", safariResponse.data)
 
         if (safariResponse.data && safariResponse.data.id) {
           setSafari(safariResponse.data);
@@ -207,6 +198,13 @@ const SafariDetail = () => {
       "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
     ];
 
+  //   4 Days Lake Nakuru & Naivasha
+	// 7 Days, Mt Kilimanjaro – Rongai Route
+	// 5 Days Tsavo West, Amboseli, Tsavo East National park game safari
+	// 4 Days Masai Mara Flying Safari
+	// 4-Day Mombasa or Diani – Tsavo East – Amboseli – Nairobi
+	// 7-Day Nothern & Southern Kenya Savanna private safari
+
 
     if (loading) {
       return (
@@ -268,9 +266,9 @@ const SafariDetail = () => {
             <div className='safari-map-content'>
               <section id="map" className='safari-section-map'>
                 <h2>Map</h2>
-                {contextSafari?.mapEmbedUrl ? (
+                {mapEmbedUrl ? (
                   <iframe
-                    src={contextSafari.mapEmbedUrl}
+                    src={mapEmbedUrl}
                     width="100%"
                     height="450px"
                     style={{ border: 0 }}

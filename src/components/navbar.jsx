@@ -1,17 +1,42 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useSafari } from "./safaricontext";
+import axios from "axios";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SyncLoader } from 'react-spinners';
+
 
 const NavBar = () =>{
 
-    const {safaris} = useSafari()
+    const { mapData } = useSafari()
+    const [safaris, setSafaris] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchSafaris = async () => {
+            try {
+                const response = await axios.get("http://127.0.0.1:8000/safari/api/safaris/")
+                setSafaris(response.data)
+                setLoading(false)
+            } catch (error) {
+                console.error("Error fetching safaris", error)
+                setLoading(false)
+            }
+        }
+        fetchSafaris()
+    }, [])
+
+    const safarisWithMaps = safaris.map((safari) => {
+        const map = mapData.find((m) => m.title === safari.location);
+        return { ...safari, mapEmbedUrl: map?.mapEmbedUrl };
+    });
+
 
     return(
         <>
         <div className="nav-bar">
-            <h1>Mali Kale <span>Safaris</span></h1>
+            <h1>MaliKale <span>Safaris</span></h1>
             <div className="nav-links">
                     <nav className="navbar navbar-expand-lg bg-body-tertiary">
                         <div className="container-fluid">
@@ -32,12 +57,17 @@ const NavBar = () =>{
                                             {/* dropdown-toggle */}
                                         </a>
                                         <ul className="dropdown-menu">
-                                            {safaris?.length > 0 && safaris.map(safari =>(
+                                            { loading ? (
+                                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '20vh'}}>
+                                                <SyncLoader color='#029132' size={10} />
+                                              </div>
+                                            ): (
+                                                safarisWithMaps.map((safari) =>(
                                                 <li key={safari.id}>
                                                     <Link to={`/safari/${safari.id}`} className="dropdown-item" >{safari.title}</Link>
                                                 </li>
                                             ))
-                                            }
+                                            )}
                                         </ul>
                                     </li>
                                     <li className="nav-item navbar-link">
