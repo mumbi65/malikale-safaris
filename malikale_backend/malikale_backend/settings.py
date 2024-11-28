@@ -15,15 +15,19 @@ import os
 import dj_database_url
 import environ
 
+
+
+
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 env = environ.Env(
     # Set default values and casting
     DEBUG=(bool, False)
 )
 
-environ.Env.read_env()
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -35,11 +39,14 @@ SECRET_KEY = env("SECRET_KEY")
 # 'django-insecure-v*!&anbi9-1bsyqwf-u_i9h87up=fc2^h6i1^hm-c^3_ce!lkj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 
+print("Loaded SECRET_KEY:", env("SECRET_KEY", default="Not Set"))
+print("Loaded DEBUG:", env("DEBUG", default="Not Set"))
+print("Loaded ALLOWED_HOSTS:", env.list("ALLOWED_HOSTS", default=[]))
 # Application definition
 
 INSTALLED_APPS = [
