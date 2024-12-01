@@ -24,7 +24,7 @@ const Payment = () => {
 
     useEffect(() => {
         let isMounted = true
-        fetch(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
+        fetch(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
             .then((response) => response.json())
             .then((data) => {
                 if (isMounted) {
@@ -58,7 +58,7 @@ const Payment = () => {
         setLoading(true);
         
         try {
-            const stkResponse = await fetch("http://127.0.0.1:8000/safari/daraja/stk_push/", {
+            const stkResponse = await fetch("https://malikale-safaris.onrender.com/safari/daraja/stk_push/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -96,7 +96,7 @@ const Payment = () => {
         setTimeout(() => {
             const interval = setInterval(async () => {
                 try {
-                    const response = await fetch(`http://127.0.0.1:8000/safari/payment-status/${checkout_request_id}/`);
+                    const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkout_request_id}/`);
                     const data = await response.json();
                     
                     if(response.ok) {

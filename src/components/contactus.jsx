@@ -17,7 +17,7 @@ const ContactUs = () =>{
 
     const onSubmit = async (values, {setSubmitting, resetForm}) =>{
         try {
-            const response = await fetch('http://127.0.0.1:8000/safari/api/contact/', {
+            const response = await fetch('https://malikale-safaris.onrender.com/safari/api/contact/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

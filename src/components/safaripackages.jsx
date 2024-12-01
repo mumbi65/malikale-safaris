@@ -10,13 +10,13 @@ import { useSafari } from "./safaricontext";
 
 
 const SafariPackage = () => {
-  const {safaris} = useSafari()
+  const { mapData } = useSafari()
 
   return (
     <>
     <NavBar/>
     <div className="row justify-content-around safari-package-container">
-      {safaris.map((safari, index) => (
+      {mapData.map((safari) => (
         
           <div className="card col-md-3 safari-package-card" key={safari.id}>
             <img src={safari.image} className="card-img-top" alt="..." />

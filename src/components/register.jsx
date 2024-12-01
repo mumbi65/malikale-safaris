@@ -60,7 +60,7 @@ const Register = () => {
                 password: formData.password
             }
 
-            await axios.post("http://127.0.0.1:8000/api/auth/register/", dataToSubmit)
+            await axios.post("https://malikale-safaris.onrender.com/api/auth/register/", dataToSubmit)
 
             navigate('/')
 

@@ -36,14 +36,14 @@ const SafariDetail = () => {
   const contextSafari = mapData.find(s => s.id === parseInt(safariId))
   const mapEmbedUrl = contextSafari?.mapEmbedUrl
 
-  const imageUrl = `http://127.0.0.1:8000${safari?.image2}`;
+  const imageUrl = `https://malikale-safaris.onrender.com${safari?.image2}`;
 
 
   const fetchSafariDetails = async () => {
     if (safariId) {
       try {
         console.log("Fetching safari details for ID:", safariId)
-        const safariResponse = await axios.get(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
+        const safariResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
         console.log("Safari details fetched:", safariResponse.data)
 
         if (safariResponse.data && safariResponse.data.id) {
@@ -66,7 +66,7 @@ const SafariDetail = () => {
     if (safari && safari.id) {
       try {
         setLoadingReviews(true)
-        const reviewsResponse = await axios.get(`http://127.0.0.1:8000/safari/reviews/safari/${safariId}/`)
+        const reviewsResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews/safari/${safariId}/`)
         setReviews(reviewsResponse.data)
       } catch (err) {
         console.error('Error fetching reviews', err.response ? err.response.data : err.message)
@@ -103,13 +103,13 @@ const SafariDetail = () => {
       safari: safari.id
     }
     try {
-      await axios.post('http://127.0.0.1:8000/safari/reviews/', adjustedReviewData, {
+      await axios.post('https://malikale-safaris.onrender.com/safari/reviews/', adjustedReviewData, {
         headers: {
           Authorization: `Token ${userToken}`
         }
       })
       alert('Review submitted successfully')
-      const response = await axios.get(`http://127.0.0.1:8000/safari/reviews?safariId=${safari.id}`,
+      const response = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews?safariId=${safari.id}`,
         {
           headers: {
             Authorization: `Token ${userToken}`
@@ -152,7 +152,7 @@ const SafariDetail = () => {
         }
 
         try {
-          await axios.post('http://127.0.0.1:8000/safari/api/bookings/', bookingData, {
+          await axios.post('https://malikale-safaris.onrender.com/safari/api/bookings/', bookingData, {
             headers: {
               Authorization: `Token ${localStorage.getItem('token')}`,
             }

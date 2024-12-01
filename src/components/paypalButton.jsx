@@ -38,7 +38,7 @@ const PaypalButton = React.memo(({ amount, onSuccess }) => {
                     }
                     
 
-                    fetch("http://127.0.0.1:8000/safari/save-paypal-payment/", {
+                    fetch("https://malikale-safaris.onrender.com/safari/save-paypal-payment/", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

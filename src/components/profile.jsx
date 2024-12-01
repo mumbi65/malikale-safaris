@@ -46,7 +46,7 @@ const Profile = () => {
 
     const fetchBookedSafaris = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/safari/api/booked/", {
+            const response = await axios.get("https://malikale-safaris.onrender.com/safari/api/booked/", {
                 headers: {Authorization: `Token ${token}`},
             })
             setSafaris(response.data)
@@ -57,7 +57,7 @@ const Profile = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8000/safari/reviews/", {
+            const response = await axios.get("https://malikale-safaris.onrender.com/safari/reviews/", {
                 headers: {Authorization: `Token ${token}`},
             })
             console.log("Fetched reviews:", response.data); 
@@ -78,7 +78,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/auth/profile/", {
+                const response = await axios.get("https://malikale-safaris.onrender.com/api/auth/profile/", {
                     headers: {
                         Authorization: `Token ${token}`,
                     },
@@ -117,7 +117,7 @@ const Profile = () => {
         }
 
         try {
-            await axios.put("http://127.0.0.1:8000/api/auth/profile/", updatedData, {
+            await axios.put("https://malikale-safaris.onrender.com/api/auth/profile/", updatedData, {
                 headers: {
                     Authorization: `Token ${token}`,
                 }
