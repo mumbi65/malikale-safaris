@@ -41,6 +41,7 @@ const SafariDetail = () => {
     if (safariId) {
       try {
         const safariResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
+        console.log("Safari Response:", safariResponse);
         
         if (safariResponse.data && safariResponse.data.id) {
           setSafari(safariResponse.data);
@@ -238,12 +239,12 @@ const SafariDetail = () => {
           <div className='safari-header'>
             <h1>{safari.title}</h1>
           </div>
-          {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={safari.title || "Safari Image"}
-                className="safari-detail-image"
-              />
+          {safari?.image2 ? (
+            <img
+              src={`https://malikale-safaris.onrender.com${safari.image2}`}
+              alt={safari.title || "Safari Image"}
+              className="safari-detail-image"
+            />
             ) : (
               <p>No image available for this safari.</p>
             )}
