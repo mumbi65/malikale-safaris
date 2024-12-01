@@ -36,16 +36,12 @@ const SafariDetail = () => {
   const contextSafari = mapData.find(s => s.id === parseInt(safariId))
   const mapEmbedUrl = contextSafari?.mapEmbedUrl
 
-  const imageUrl = `https://malikale-safaris.onrender.com${safari?.image2}`;
-
 
   const fetchSafariDetails = async () => {
     if (safariId) {
       try {
-        console.log("Fetching safari details for ID:", safariId)
         const safariResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
-        console.log("Safari details fetched:", safariResponse.data)
-
+        
         if (safariResponse.data && safariResponse.data.id) {
           setSafari(safariResponse.data);
         } else {
@@ -79,6 +75,18 @@ const SafariDetail = () => {
   useEffect(() => {
     fetchSafariDetails()
   }, [safariId])
+
+  const imageUrl =safari && safari.image2 ? `https://malikale-safaris.onrender.com${safari?.image2}` : null;
+  console.log(imageUrl)
+
+
+  useEffect(() => {
+    if (imageUrl) {
+      console.log("Image URL is valid:", imageUrl);
+    } else {
+      console.error("Image URL is invalid or undefined.");
+    }
+  }, [imageUrl])
 
   useEffect(() => {
     if (safari) {
@@ -230,7 +238,15 @@ const SafariDetail = () => {
           <div className='safari-header'>
             <h1>{safari.title}</h1>
           </div>
-          <img src={imageUrl} alt={safari.title} className="safari-detail-image" />
+          {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={safari.title || "Safari Image"}
+                className="safari-detail-image"
+              />
+            ) : (
+              <p>No image available for this safari.</p>
+            )}
           <div className="safari-detail-content">
             <nav className="safari-detail-nav">
               <a href="#overview">Overview</a>
