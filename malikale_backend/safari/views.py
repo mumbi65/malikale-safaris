@@ -8,8 +8,6 @@ from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from requests.auth import HTTPBasicAuth
-import requests
-import base64
 from datetime import datetime
 from django_daraja.mpesa.core import MpesaClient
 from django.views.decorators.csrf import csrf_exempt
@@ -23,6 +21,7 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
+from django.core import cache
 
 
 # Create your views here.
@@ -223,8 +222,7 @@ def stk_push_view(request):
 
             phone_number = data.get('phone_number')
             amount = data.get('amount', 1)
-            name = data.get('name')
-            email = data.get('email')
+            
 
             safari_package = SafariPackage.objects.get(id=safari_package_id)
 
@@ -243,16 +241,7 @@ def stk_push_view(request):
             if response.status_code == 200 and content['ResponseCode'] == '0':
                 checkout_request_id = content['CheckoutRequestID']
 
-                MpesaPayment.objects.create(
-                    safari_package=safari_package,
-                    name=name,
-                    email=email,
-                    phone_number=phone_number,
-                    amount=amount,
-                    checkout_request_id=checkout_request_id,
-                    status='pending',
-                    # created_at=now()
-                )
+                cache.set(checkout_request_id, safari_package_id, timeout=3600) #store for 1 hour
 
                 return JsonResponse({
                     'message': 'STK push initiated',
@@ -288,97 +277,59 @@ def mpesa_callback(request):
                 return JsonResponse({'error': 'Invalid callback structure'}, status=400)
             
             stk_callback = data['Body']['stkCallback']
-            # safari_package_id = data['Body'].get('safari_package_id')
-            # name = data.get('name')
-            # email = data.get('email')
-            # phone_number = data.get('phone_number')
-            # amount = data.get('amount')
-
             result_code = stk_callback.get('ResultCode', None)
             result_desc = stk_callback.get('ResultDesc', '')
             checkout_request_id = stk_callback.get('CheckoutRequestID', '')
 
             print(f"Result Code: {result_code}, Result Description: {result_desc}")
+            safari_package_id = cache.get(checkout_request_id)
 
-            payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
+
+            if not safari_package_id:
+                return JsonResponse({'error': 'Safari package information not found'}, status=404)
+            
+            safari_package = SafariPackage.objects.get(id=safari_package_id)
 
             if result_code == 0:
-                # payment_saved = savePayment(stk_callback, safari_package_id, name, email, phone_number, amount, data)
-
-                # if payment_saved:
-                #     return JsonResponse({'message': 'Payment success notification sent'}, status=200)
-                
-                # else:
-                #     return JsonResponse({'error': 'Failed to save payment'}, status=500)
-
                 receipt_number = next(
                     (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
                 )
 
-                payment.transaction_id = receipt_number
-                payment.status = 'success'
-                payment.save()
+                name = next(
+                    (item['Value'] for item in stk_callback if item['Name'] == 'Name'), 'Anonymous'
+                )
+
+                phone_number = next(
+                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'PhoneNumber'), None
+                )
+
+                amount = next(
+                    (item['Value'] for item in stk_callback if item['Name'] == 'Amount'), None
+                )
+
+                MpesaPayment.objects.create(
+                    safari_package=safari_package,
+                    name=name,
+                    phone_number=phone_number,
+                    amount=amount,
+                    transaction_id=receipt_number,
+                    status='success'
+                )
 
                 return JsonResponse({'message': 'Payment recorded successfully'}, status=200)
             
-            elif result_code == 1032:
-                payment.status = 'canceled'
-                payment.save()
-
-                return JsonResponse({'message': 'Payment canceled by user', 'status': 'canceled'}, status=200)
-            
-            payment.status = 'failed'
-            payment.save()
             return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
+        
+        except SafariPackage.DoesNotExist:
+            return JsonResponse({'error': 'Safari package not found'}, status=404)
         
         except MpesaPayment.DoesNotExist:
             return JsonResponse({'error': 'Payment not found'}, status=404)
     
-        except KeyError as e:
-            return JsonResponse({'error': f'Missing field: {str(e)}'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
         
     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-
-# def savePayment(stk_callback, safari_package_id, name, email, phone_number, amount, data):
-#     checkout_request_id = stk_callback.get('CheckoutRequestID', '')
-#     receipt_number = next(
-#         (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
-#     )
-
-#     print(f"Attempting to save payment for CheckoutRequestID: {checkout_request_id}")
-
-#     if receipt_number:
-#         try:
-                    
-#             print("Saving receipt number: {receipt_number}")
-
-#             if safari_package_id:
-#                 safari_package = SafariPackage.objects.get(id=safari_package_id)
-#             else:
-#                 print("Warning: safari_package_id not found in callback data")
-
-#             MpesaPayment.objects.create(
-#                 safari_package=safari_package,
-#                 name=name,
-#                 email=email,
-#                 phone_number=phone_number,
-#                 amount=amount,
-#                 transaction_id=receipt_number,
-#                 checkout_request_id=checkout_request_id,
-#                 status='success'
-#             )
-
-#             print(f"Payment saved successfully for CheckoutRequestID: {checkout_request_id}")
-#             return True  # Payment saved successfully
-#         except SafariPackage.DoesNotExist:
-#             print(f"Safari package with ID {safari_package_id} does not exist.")
-#         except Exception as e:
-#             print(f"Error saving payment: {str(e)}")
-
-#     return False
 
 
 

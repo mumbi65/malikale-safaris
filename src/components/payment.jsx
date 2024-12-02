@@ -65,13 +65,13 @@ const Payment = () => {
                     phone_number: phoneNumber,
                     amount: parseInt(amount, 10),
                     name,
-                    email,
                     safari_package_id: safariId,
                 }),
             });
 
             const stkData = await stkResponse.json();
             console.log("STK Push Response:", stkData);
+            console.log("Response Code:", stkData.ResponseCode)
 
 
             if (stkResponse.ok && stkData.ResponseCode === "0") {
@@ -93,7 +93,6 @@ const Payment = () => {
 
 
     const pollPaymentStatus = async (checkout_request_id) => {
-        setTimeout(() => {
             const interval = setInterval(async () => {
                 try {
                     const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkout_request_id}/`);
@@ -102,15 +101,16 @@ const Payment = () => {
                     if(response.ok) {
                         alert(data.message || "Payment saved successfully.")
                         clearInterval(interval)
+                        setIsPolling(false)
                     } else {
                         alert(data.error || "Failed to save payment")
+                        console.error("Polling error:", data.error)
                     }
                     
                 } catch (error) {
                     console.error("Save payment error:", error);
                 }
             }, 5000)
-        }, 30000)
     }
 
 
@@ -174,7 +174,7 @@ const Payment = () => {
                                         onChange={handleNameChange}
                                     />
                                 </label>
-                                <label htmlFor="">
+                                {/* <label htmlFor="">
                                     Your Email:
                                     <input
                                         type="text"
@@ -182,7 +182,7 @@ const Payment = () => {
                                         value={email}
                                         onChange={handleEmailChange}
                                     />
-                                </label>
+                                </label> */}
                                 <label htmlFor="">
                                     Mpesa Phone Number:
                                     <input type="text" placeholder="254712345678" value={phoneNumber} onChange={handlePhoneNumberChange} />
