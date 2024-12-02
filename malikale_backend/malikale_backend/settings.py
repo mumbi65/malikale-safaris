@@ -43,10 +43,6 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
-
-print("Loaded SECRET_KEY:", env("SECRET_KEY", default="Not Set"))
-print("Loaded DEBUG:", env("DEBUG", default="Not Set"))
-print("Loaded ALLOWED_HOSTS:", env.list("ALLOWED_HOSTS", default=[]))
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -165,7 +162,20 @@ CORS_ALLOWED_METHODS = [
     'GET',
     'POST',
     'DELETE',
-    'OPTION'
+    'OPTION',
+    'PATCH',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -196,8 +206,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
-
-
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
