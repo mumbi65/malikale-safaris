@@ -21,7 +21,7 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.middleware.csrf import get_token
 from django.utils.decorators import method_decorator
-from django.core import cache
+from django.core.cache import cache
 
 
 # Create your views here.
