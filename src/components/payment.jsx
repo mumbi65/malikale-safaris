@@ -133,6 +133,10 @@ const Payment = () => {
             }, poll_interval)
     }
 
+    setTimeout(() => {
+        console.log("Starting polling after delay...");
+        pollPaymentStatus()
+    }, 30000)
 
 
     const handlePaymentSuccess = useCallback((details) => {
