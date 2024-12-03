@@ -95,7 +95,7 @@ const Payment = () => {
     const pollPaymentStatus = async (checkout_request_id) => {
 
             const startTime = Date.now()
-            const max_polling_time = 30000
+            const max_polling_time = 60000
             const poll_interval = 5000
 
             const interval = setInterval(async () => {
