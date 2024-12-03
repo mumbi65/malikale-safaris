@@ -93,24 +93,44 @@ const Payment = () => {
 
 
     const pollPaymentStatus = async (checkout_request_id) => {
+
+            const startTime = Date.now()
+            const max_polling_time = 30000
+            const poll_interval = 5000
+
             const interval = setInterval(async () => {
+                const elapsedTime = Date.now() - startTime
+
+                if (elapsedTime >= max_polling_time) {
+                    clearInterval(interval)
+                    alert("Payment verification timed out.")
+                    setIsPolling(false)
+                    return
+                }
+
                 try {
                     const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkout_request_id}/`);
                     const data = await response.json();
                     
-                    if(response.ok) {
+                    if(response.ok && data.status === 'success') {
                         alert(data.message || "Payment saved successfully.")
                         clearInterval(interval)
                         setIsPolling(false)
+                    } else if (response.status === 404){
+                        console.log(`Payment not found. Retrying...(${elapsedTime/1000} seconds elapsed)`)
                     } else {
+                        clearInterval(interval)
                         alert(data.error || "Failed to save payment")
-                        console.error("Polling error:", data.error)
+                        setIsPolling(false)
                     }
                     
                 } catch (error) {
+                    clearInterval(interval)
                     console.error("Save payment error:", error);
+                    alert("Network error. Please check your connection.")
+                    setIsPolling(false)
                 }
-            }, 5000)
+            }, poll_interval)
     }
 
 

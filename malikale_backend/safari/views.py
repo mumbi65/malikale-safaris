@@ -295,16 +295,14 @@ def mpesa_callback(request):
                     (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
                 )
 
-                name = next(
-                    (item['Value'] for item in stk_callback if item['Name'] == 'Name'), 'Anonymous'
-                )
+                name = data.get('name', 'Anonymous')
 
                 phone_number = next(
                     (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'PhoneNumber'), None
                 )
 
                 amount = next(
-                    (item['Value'] for item in stk_callback if item['Name'] == 'Amount'), None
+                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'Amount'), None
                 )
 
                 MpesaPayment.objects.create(
@@ -313,6 +311,7 @@ def mpesa_callback(request):
                     phone_number=phone_number,
                     amount=amount,
                     transaction_id=receipt_number,
+                    checkout_request_id=checkout_request_id,
                     status='success'
                 )
 
