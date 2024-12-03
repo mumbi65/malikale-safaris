@@ -14,9 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 import environ
-
-
-
+import redis
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,6 +40,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+
 
 # Application definition
 
@@ -221,6 +220,28 @@ EMAIL_HOST_PASSWORD = ''
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REDIS_HOST = 'redis-13091.c263.us-east-1-2.ec2.redns.redis-cloud.com'
+REDIS_PORT = 13091
+REDIS_PASSWORD = 'J2NSFCJSbnZs3lAVPnCNx1wGBiJp9cef'
+
+REDIS_CLIENT = redis.Redis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    password=REDIS_PASSWORD
+)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis-13091.c263.us-east-1-2.ec2.redns.redis-cloud.com:13091',
+        'OPTIONS': {
+            'CLIENT_CLASS':'django_redis.client.DefaultClient',
+            'PASSWORD':'J2NSFCJSbnZs3lAVPnCNx1wGBiJp9cef',
+            'DATABASE':0
+        },
+    }
+}
 
 
 # The Mpesa environment to use
