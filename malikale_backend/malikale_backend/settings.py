@@ -246,6 +246,7 @@ CACHES = {
 
 # The Mpesa environment to use
 # Possible values: sandbox, production
+# Settings
 
 MPESA_ENVIRONMENT = 'sandbox'
 
