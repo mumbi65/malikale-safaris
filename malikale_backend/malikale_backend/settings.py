@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'authentication',
     'corsheaders',
     'django_daraja',
+    'django_redis',
     'safari',
     'channels',
     'django.contrib.auth',
@@ -234,10 +235,10 @@ REDIS_CLIENT = redis.Redis(
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis-13091.c263.us-east-1-2.ec2.redns.redis-cloud.com:13091',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
         'OPTIONS': {
             'CLIENT_CLASS':'django_redis.client.DefaultClient',
-            'PASSWORD':'J2NSFCJSbnZs3lAVPnCNx1wGBiJp9cef',
+            'PASSWORD':REDIS_PASSWORD,
             'DATABASE':0
         },
     }
