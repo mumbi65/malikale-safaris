@@ -337,18 +337,24 @@ def payment_status(request, checkout_request_id):
     print(f"Received request for checkout_request_id: {checkout_request_id}")
     if request.method == 'GET':
         try:
-            payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
-            print(f"Found payment: {payment}")
-            if payment:
-                # status = 'success' if payment.transaction_id else 'pending'
+
+            print(f"Checking for existing payments with checkout_request_id: {checkout_request_id}")
+            existing_payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id)
+            print(f"Found {existing_payment.count()} payments")
+
+            if existing_payment.exists():
+                payment = existing_payment.first()
+                print(f"First payment details: {payment.__dict__}")
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
-                  'status': payment.status
+                  'status': payment.status or 'pending'
                   }, status=200)
-        except MpesaPayment.DoesNotExist:
-            print(f"Payment not found for CheckoutRequestID: {checkout_request_id}")
+            
+            print("No payments found with this checkout_request_id")
             return JsonResponse({'error': 'Payment not found'}, status=404)
+        
         except Exception as e:
+            print(f"Unexpected error in payment_status: {e}")
             return JsonResponse({'error': str(e)}, status=500)
     
     return JsonResponse({'error': 'Invalid request method'}, status=405)

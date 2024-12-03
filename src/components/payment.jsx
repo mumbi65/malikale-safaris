@@ -112,7 +112,7 @@ const Payment = () => {
                     const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkout_request_id}/`);
                     const data = await response.json();
                     
-                    if(response.ok && data.status === 'success') {
+                    if(response.ok && (data.status === 'success' || data.transaction_id)) {
                         alert(data.message || "Payment saved successfully.")
                         clearInterval(interval)
                         setIsPolling(false)
@@ -144,7 +144,6 @@ const Payment = () => {
         navigate(`/safari/${safariId}`)
     }
 
-    console.log("Payment component rendered")
 
     return (
         <div className="payment-page-container">
