@@ -232,7 +232,7 @@ def stk_push_view(request):
                 amount=amount,
                 account_reference='Safari Payment',
                 transaction_desc='Payment for Safari',
-                callback_url='https://malikale-safaris.onrender.com/safari/daraja/callback/'
+                callback_url='ngrok http --url=charming-crane-visually.ngrok-free.app/safari/daraja/callback/'
             )
 
             print(response.content) 
@@ -316,9 +316,10 @@ def mpesa_callback(request):
             # Determine payment status
             RESULT_CODES = {
                 0: 'success',
-                1: 'cancelled_by_user',
+                1: 'The balance is insufficient for the transaction',
                 1032: 'cancelled_by_user',
-                17: 'cancelled_by_user',
+                1037: 'No response from the user',
+                1025: 'An error occurred while sending a push request'
             }
             status = RESULT_CODES.get(result_code, 'failed')
 
