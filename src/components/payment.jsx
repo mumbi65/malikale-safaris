@@ -56,6 +56,7 @@ const Payment = () => {
 
     const handlePayment = async () => {
         setLoading(true);
+        setIsPolling(false)
         
         try {
             const stkResponse = await fetch("https://malikale-safaris.onrender.com/safari/daraja/stk_push/", {
@@ -76,8 +77,15 @@ const Payment = () => {
 
             if (stkResponse.ok && stkData.ResponseCode === "0") {
                 alert("Payment request sent. Check your phone.");
-                setCheckoutRequestId(stkData.CheckoutRequestID); // Store CheckoutRequestID for tracking
-                await pollPaymentStatus(stkData.CheckoutRequestID)
+                const checkoutRequestId = stkData.CheckoutRequestID
+                setCheckoutRequestId(checkoutRequestId)
+
+                const pollingTimeout = setTimeout(() => {
+                    console.log("Starting polling after delay...")
+                    pollPaymentStatus(checkoutRequestId)
+                }, 30000)
+
+                return () => clearTimeout(pollingTimeout)
             } else {
                 const errorMessage = stkData?.CustomerMessage || "Failed to initiate payment";
                 console.error("Unexpected response:", stkData);
@@ -92,7 +100,15 @@ const Payment = () => {
     };
 
 
-    const pollPaymentStatus = async (checkout_request_id) => {
+    const pollPaymentStatus = async (checkoutRequestId) => {
+
+            if(!checkoutRequestId) {
+                console.error("No checkout request ID provided")
+                return
+            }
+
+            if (isPolling) return
+            setIsPolling(true)
 
             const startTime = Date.now()
             const max_polling_time = 60000
@@ -109,7 +125,7 @@ const Payment = () => {
                 }
 
                 try {
-                    const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkout_request_id}/`);
+                    const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkoutRequestId}/`);
                     const data = await response.json();
                     
                     if(response.ok && (data.status === 'success' || data.transaction_id)) {
@@ -132,11 +148,6 @@ const Payment = () => {
                 }
             }, poll_interval)
     }
-
-    setTimeout(() => {
-        console.log("Starting polling after delay...");
-        pollPaymentStatus()
-    }, 30000)
 
 
     const handlePaymentSuccess = useCallback((details) => {

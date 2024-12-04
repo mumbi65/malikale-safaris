@@ -14,7 +14,6 @@ urlpatterns = [
     path('daraja/stk_push/', stk_push_view, name='stk-push'),
     path('daraja/callback/', mpesa_callback, name='callback'),
     path('payment-status/<str:checkout_request_id>/', payment_status, name='payment-status'),
-    # path('save-payment/<str:checkout_request_id>/', savePayment, name='save-payment'),
     path('save-paypal-payment/', save_paypal_payment, name='save-paypal-payment'),
     path('api/password-reset/', CustomPasswordResetView.as_view(), name='password-reset'),
     path('api/password-reset/confirm/<uidb64>/<token>/', CustomPasswordResetConfirmView.as_view(), name='password-reset-confirm'),
