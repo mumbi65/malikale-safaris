@@ -222,6 +222,7 @@ def stk_push_view(request):
 
             phone_number = data.get('phone_number')
             amount = data.get('amount', 1)
+            name = data.get('name', 'Anonymous')
             
 
             safari_package = SafariPackage.objects.get(id=safari_package_id)
@@ -242,6 +243,8 @@ def stk_push_view(request):
                 checkout_request_id = content['CheckoutRequestID']
 
                 cache.set(checkout_request_id, safari_package_id, timeout=3600) #store for 1 hour
+                cache.set(f"{checkout_request_id}_name", name, timeout=3600)
+                cache.set(f"{checkout_request_id}_phone", phone_number, timeout=3600)
 
                 return JsonResponse({
                     'message': 'STK push initiated',
@@ -291,14 +294,16 @@ def mpesa_callback(request):
             safari_package = SafariPackage.objects.get(id=safari_package_id)
 
             if result_code == 0:
+
+                name = cache.get(f"{checkout_request_id}_name", 'Anonymous')
+                cached_phone = cache.get(f"{checkout_request_id}_phone")
+
                 receipt_number = next(
                     (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
                 )
 
-                name = data.get('name', 'Anonymous')
-
                 phone_number = next(
-                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'PhoneNumber'), None
+                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'PhoneNumber'), cached_phone
                 )
 
                 amount = next(
