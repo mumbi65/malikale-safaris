@@ -128,7 +128,7 @@ const Payment = () => {
                     const response = await fetch(`https://malikale-safaris.onrender.com/safari/payment-status/${checkoutRequestId}/`);
                     const data = await response.json();
                     
-                    if(response.ok && (data.status === 'success' || data.transaction_id)) {
+                    if(response.ok && (data.status === 'success' || data.status === 'cancelled_by_user')) {
                         alert(data.message || "Payment saved successfully.")
                         clearInterval(interval)
                         setIsPolling(false)

@@ -272,14 +272,9 @@ def stk_push_view(request):
 def mpesa_callback(request):
     if request.method == 'POST':
         try:
-            print("Mpesa Callback received", json.dumps(data, indent=2)
-                  )
+            print("Mpesa Callback received")
             data = json.loads(request.body.decode('utf-8'))
-            print(f"Parsed Callback Data: {data}")
-
-            if not data.get('Body', {}).get('stkCallback'):
-                print("Malformed callback data")
-                return JsonResponse({'error': 'Invalid callback structure'}, status=400)
+            print(f"Parsed Callback Data:", json.dumps(data, indent=4))
 
             if 'Body' not in data or 'stkCallback' not in data['Body']:
                 print("Invalid callback structure.")
@@ -299,33 +294,36 @@ def mpesa_callback(request):
             
             safari_package = SafariPackage.objects.get(id=safari_package_id)
 
-            if result_code == 0:
+            RESULT_CODES = {
+                0: 'success',
+                1: 'cancelled_by_user',
+                1032: 'cancelled_by_user',
+                17: 'cancelled_by_user',
+            }
 
-                name = cache.get(f"{checkout_request_id}_name", 'Anonymous')
-                cached_phone = cache.get(f"{checkout_request_id}_phone")
-                cached_amount = cache.get(f"{checkout_request_id}_amount")
+            status = RESULT_CODES.get(result_code, 'failed') 
 
-                callback_items = stk_callback.get('CallbackMetadata', {}).get('Item', [])
-
-                receipt_number = next(
-                    (item['Value'] for item in callback_items if item['Name'] == 'MpesaReceiptNumber'), None
-                )
-
-                MpesaPayment.objects.create(
+            MpesaPayment.objects.create(
                     safari_package=safari_package,
-                    name=name,
-                    phone_number=cached_phone,
-                    amount=cached_amount,
-                    transaction_id=receipt_number,
+                    name=cache.get(f"{checkout_request_id}_name", 'Anonymous'),
+                    phone_number=cache.get(f"{checkout_request_id}_phone"),
+                    amount=cache.get(f"{checkout_request_id}_amount"),
+                    transaction_id=next(
+                        (item['Value'] for item in stk_callback.get('CallbackMetadata', {}).get('Item', []) if item['Name'] == 'MpesaReceiptNumber'), None
+                    ),
                     checkout_request_id=checkout_request_id,
-                    status='success'
+                    status=status
                 )
-
-                return JsonResponse({'message': 'Payment recorded successfully'}, status=200)
             
-            return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
+            if status == 'success':
+                return JsonResponse({'message': 'Payment recorded successfully'}, status=200)
+            elif status == 'cancelled_by_user':
+                return JsonResponse({'message': 'Payment cancelled by user'}, status=400)
+            else:
+                return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
         
         except Exception as e:
+            print(f"Callback processing error: {e}")
             return JsonResponse({'error': str(e)}, status=500)
         
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -347,8 +345,7 @@ def payment_status(request, checkout_request_id):
                 print(f"First payment details: {payment.__dict__}")
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
-                  'status': payment.status or 'pending',
-                  'amount': payment.amount
+                  'status': payment.status or 'pending'
                   }, status=200)
             
             print("No payments found with this checkout_request_id")
