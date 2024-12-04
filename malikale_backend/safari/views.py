@@ -368,11 +368,9 @@ def payment_status(request, checkout_request_id):
         try:
 
             print(f"Checking for existing payments with checkout_request_id: {checkout_request_id}")
-            existing_payment = MpesaPayment.objects.get(checkout_request_id=checkout_request_id)
-            print(f"Found {existing_payment.count()} payments")
+            payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id)
 
-            if existing_payment.exists():
-                payment = existing_payment.first()
+            if payment:
                 print(f"First payment details: {payment.__dict__}")
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
