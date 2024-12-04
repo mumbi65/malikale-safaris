@@ -268,12 +268,12 @@ def stk_push_view(request):
 def mpesa_callback(request):
     if request.method == 'POST':
         try:
-            print("Callback received")
+            logger.info("Mpesa Callback received")
             data = json.loads(request.body.decode('utf-8'))
-            print("Parsed Data:", data)
+            logger.info(f"Parsed Callback Data: {data}")
 
             if 'Body' not in data or 'stkCallback' not in data['Body']:
-                print("Invalid callback structure.")
+                logger.info("Invalid callback structure.")
                 return JsonResponse({'error': 'Invalid callback structure'}, status=400)
             
             stk_callback = data['Body']['stkCallback']
@@ -281,7 +281,7 @@ def mpesa_callback(request):
             result_desc = stk_callback.get('ResultDesc', '')
             checkout_request_id = stk_callback.get('CheckoutRequestID', '')
 
-            print(f"Result Code: {result_code}, Result Description: {result_desc}")
+            logger.info(f"Result Code: {result_code}, Result Description: {result_desc}")
             safari_package_id = cache.get(checkout_request_id)
 
 
