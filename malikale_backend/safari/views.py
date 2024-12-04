@@ -277,7 +277,7 @@ def mpesa_callback(request):
             print(f"Parsed Callback Data: {data}")
 
             if 'Body' not in data or 'stkCallback' not in data['Body']:
-                logger.info("Invalid callback structure.")
+                print("Invalid callback structure.")
                 return JsonResponse({'error': 'Invalid callback structure'}, status=400)
             
             stk_callback = data['Body']['stkCallback']
@@ -300,23 +300,17 @@ def mpesa_callback(request):
                 cached_phone = cache.get(f"{checkout_request_id}_phone")
                 cached_amount = cache.get(f"{checkout_request_id}_amount")
 
+                callback_items = stk_callback.get('CallbackMetadata', {}).get('Item', [])
+
                 receipt_number = next(
-                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
-                )
-
-                phone_number = next(
-                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'PhoneNumber'), cached_phone
-                )
-
-                amount = next(
-                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'Amount'), cached_amount
+                    (item['Value'] for item in callback_items if item['Name'] == 'MpesaReceiptNumber'), None
                 )
 
                 MpesaPayment.objects.create(
                     safari_package=safari_package,
                     name=name,
-                    phone_number=phone_number,
-                    amount=amount,
+                    phone_number=cached_phone,
+                    amount=cached_amount,
                     transaction_id=receipt_number,
                     checkout_request_id=checkout_request_id,
                     status='success'
@@ -326,12 +320,6 @@ def mpesa_callback(request):
             
             return JsonResponse({'message': f'Payment failed: {result_desc}'}, status=400)
         
-        except SafariPackage.DoesNotExist:
-            return JsonResponse({'error': 'Safari package not found'}, status=404)
-        
-        except MpesaPayment.DoesNotExist:
-            return JsonResponse({'error': 'Payment not found'}, status=404)
-    
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
         
