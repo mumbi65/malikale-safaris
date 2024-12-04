@@ -232,7 +232,7 @@ def stk_push_view(request):
                 amount=amount,
                 account_reference='Safari Payment',
                 transaction_desc='Payment for Safari',
-                callback_url='ngrok http --url=charming-crane-visually.ngrok-free.app/safari/daraja/callback/'
+                callback_url='https://malikale-safaris.onrender.com/safari/daraja/callback/'
             )
 
             print(response.content) 
