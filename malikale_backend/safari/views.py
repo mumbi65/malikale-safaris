@@ -245,6 +245,7 @@ def stk_push_view(request):
                 cache.set(checkout_request_id, safari_package_id, timeout=3600) #store for 1 hour
                 cache.set(f"{checkout_request_id}_name", name, timeout=3600)
                 cache.set(f"{checkout_request_id}_phone", phone_number, timeout=3600)
+                cache.set(f"{checkout_request_id}_amount", amount, timeout=3600)
 
                 return JsonResponse({
                     'message': 'STK push initiated',
@@ -271,9 +272,9 @@ def stk_push_view(request):
 def mpesa_callback(request):
     if request.method == 'POST':
         try:
-            logger.info("Mpesa Callback received")
+            print("Mpesa Callback received")
             data = json.loads(request.body.decode('utf-8'))
-            logger.info(f"Parsed Callback Data: {data}")
+            print(f"Parsed Callback Data: {data}")
 
             if 'Body' not in data or 'stkCallback' not in data['Body']:
                 logger.info("Invalid callback structure.")
@@ -284,7 +285,7 @@ def mpesa_callback(request):
             result_desc = stk_callback.get('ResultDesc', '')
             checkout_request_id = stk_callback.get('CheckoutRequestID', '')
 
-            logger.info(f"Result Code: {result_code}, Result Description: {result_desc}")
+            print(f"Result Code: {result_code}, Result Description: {result_desc}")
             safari_package_id = cache.get(checkout_request_id)
 
 
@@ -297,6 +298,7 @@ def mpesa_callback(request):
 
                 name = cache.get(f"{checkout_request_id}_name", 'Anonymous')
                 cached_phone = cache.get(f"{checkout_request_id}_phone")
+                cached_amount = cache.get(f"{checkout_request_id}_amount")
 
                 receipt_number = next(
                     (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'MpesaReceiptNumber'), None
@@ -307,7 +309,7 @@ def mpesa_callback(request):
                 )
 
                 amount = next(
-                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'Amount'), None
+                    (item['Value'] for item in stk_callback['CallbackMetadata']['Item'] if item['Name'] == 'Amount'), cached_amount
                 )
 
                 MpesaPayment.objects.create(
