@@ -272,9 +272,14 @@ def stk_push_view(request):
 def mpesa_callback(request):
     if request.method == 'POST':
         try:
-            print("Mpesa Callback received")
+            print("Mpesa Callback received", json.dumps(data, indent=2)
+                  )
             data = json.loads(request.body.decode('utf-8'))
             print(f"Parsed Callback Data: {data}")
+
+            if not data.get('Body', {}).get('stkCallback'):
+                print("Malformed callback data")
+                return JsonResponse({'error': 'Invalid callback structure'}, status=400)
 
             if 'Body' not in data or 'stkCallback' not in data['Body']:
                 print("Invalid callback structure.")
@@ -342,7 +347,8 @@ def payment_status(request, checkout_request_id):
                 print(f"First payment details: {payment.__dict__}")
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
-                  'status': payment.status or 'pending'
+                  'status': payment.status or 'pending',
+                  'amount': payment.amount
                   }, status=200)
             
             print("No payments found with this checkout_request_id")
