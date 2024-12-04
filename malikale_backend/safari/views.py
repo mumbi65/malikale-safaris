@@ -371,7 +371,6 @@ def payment_status(request, checkout_request_id):
             payment = MpesaPayment.objects.filter(checkout_request_id=checkout_request_id)
 
             if payment:
-                print(f"First payment details: {payment.__dict__}")
                 return JsonResponse({
                 'transaction_id': payment.transaction_id,
                   'status': payment.status or 'pending'
