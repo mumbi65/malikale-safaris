@@ -5,7 +5,6 @@ import NavBar from './navbar';
 import Footer from './footer';
 import { Accordion, Card } from 'react-bootstrap';
 import { useSafari } from './safaricontext';
-import { Collapse } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faBus, faBed, faPlane, faPersonHiking, faUtensils, faLanguage, faPersonRunning, faUsers, faPersonCane, faChild } from '@fortawesome/free-solid-svg-icons';
@@ -19,6 +18,7 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { PropagateLoader } from 'react-spinners';
+import PhoneInput from 'react-phone-number-input';
 
 
 
@@ -31,9 +31,10 @@ const SafariDetail = () => {
   const [loadingReviews, setLoadingReviews] = useState(false)
   const [safariLoading, setSafariLoading] = useState(false)
   const [imageError, setImageError] = useState(false)
-
+  const [phone, setPhone] = useState()
   const { mapData } = useSafari()
   const navigate = useNavigate()
+
   const contextSafari = mapData.find(s => s.id === parseInt(safariId))
   const mapEmbedUrl = contextSafari?.mapEmbedUrl
   const imageUrl = contextSafari?.image2
@@ -373,7 +374,7 @@ const SafariDetail = () => {
                     {errors.email && touched.email ? <p className="error-message">{errors.email}</p> : ''}
                   </div>
                   <div className='form-input-content'>
-                    <div className="form-group">
+                    <div className="form-groupy">
                       <label>Country:</label>
                       <select
                         name='country'
@@ -393,17 +394,19 @@ const SafariDetail = () => {
                       </select>
                       {errors.country && touched.country ? <p className="error-message">{errors.country}</p> : ''}
                     </div>
-                    <div className="form-group">
+                    <div className="form-groupy">
                       <label>Contact number:</label>
-                      <input
+                      <PhoneInput
                         type="tel"
                         className="form-control"
                         placeholder="Enter Your Contact Number"
                         name='contactNumber'
                         id='contactNumber'
-                        onChange={handleChange}
+                        onChange={(value) => setFieldValue("contactNumber", value)}
                         onBlur={handleBlur}
                         value={values.contactNumber}
+                        defaultCountry='KE'
+                        international
                         style={errors.contactNumber && touched.contactNumber ? { borderColor: "rgb(245, 98, 98)" } : {}}
                       />
                       {errors.contactNumber && touched.contactNumber ? <p className="error-message">{errors.contactNumber}</p> : ''}

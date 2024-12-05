@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import 'react-phone-number-input/style.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AboutUs from './components/aboutus.jsx';
 import ContactUs from './components/contactus.jsx';

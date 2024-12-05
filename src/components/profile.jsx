@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 import axios from "axios"
-import SafariGraph from "./safariGraph"
+import PhoneInput from 'react-phone-number-input';
 import NavBar from "./navbar"
 import Footer from "./footer"
 import { faBus } from "@fortawesome/free-solid-svg-icons"
@@ -107,6 +107,10 @@ const Profile = () => {
         })
     }
 
+    const handlePhoneChange = (value) => {
+        setFormData({...formData, phone: value})
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -195,13 +199,16 @@ const Profile = () => {
                         </div>
                         <div>
                             <label htmlFor="">Phone</label>
-                            <input 
-                            type="text" 
+                            <input
+                            type="text"
                             name="phone" 
                             value={formData.phone}
-                            onChange={handleChange}
+                            onChange={handlePhoneChange}
                             placeholder="Enter your phone number"
-                            className="input-field"/>
+                            className="input-fieldyy"
+                            international
+                            defaultCountry="KE"
+                            />
                         </div>
                         <div>
                             <label htmlFor="">Country</label>

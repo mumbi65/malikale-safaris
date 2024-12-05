@@ -778,6 +778,7 @@ form button:hover {
   display: flex;
   justify-content: space-between;
   align-items: start;
+  gap: 10px;
 }
 
 .safari-map-content {
@@ -1193,6 +1194,21 @@ input.form-control {
   margin-bottom: 10px;
   transition: border-color 0.3s;
 }
+
+.input-fieldyy{
+  padding: 10px;
+  border: 1px solid #029132;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.phone-profile-input{
+  display: flex;
+  flex-direction: column;
+}
+
+
 
 .input-fieldy {
   width: 100%;
