@@ -107,9 +107,9 @@ const Profile = () => {
         })
     }
 
-    const handlePhoneChange = (value) => {
-        setFormData({...formData, phone: value})
-    }
+    // const handlePhoneChange = (value) => {
+    //     setFormData({...formData, phone: value})
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -203,11 +203,9 @@ const Profile = () => {
                             type="text"
                             name="phone" 
                             value={formData.phone}
-                            onChange={handlePhoneChange}
+                            onChange={handleChange}
                             placeholder="Enter your phone number"
-                            className="input-fieldyy"
-                            international
-                            defaultCountry="KE"
+                            className="input-field"
                             />
                         </div>
                         <div>
