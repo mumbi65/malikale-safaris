@@ -20,7 +20,7 @@ import ForgotPassword from './components/forgotpassword.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/home',
+    path: '/',
     element:<App/>
   },
   {
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     element: <SafariDetail/>
   },
   {
-    path: '/',
+    path: '/login',
     element: <Login/>
   },
   {

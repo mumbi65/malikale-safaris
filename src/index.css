@@ -135,18 +135,18 @@ button:focus-visible {
   top: 100%;
   left: 0;
   right: auto;
-  max-width: 375px;
+  max-width: 325px;
   width: auto;
   z-index: 1000;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 600px;
+  max-height: 700px;
 
 }
 
-/* .dropdown-item{
+.dropdown-item{
   white-space: nowrap;
-} */
+}
 
 .carousel-item img {
   height: 500px;

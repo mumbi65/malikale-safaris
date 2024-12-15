@@ -43,7 +43,7 @@ const SafariDetail = () => {
   const fetchSafariDetails = async () => {
     if (safariId) {
       try {
-        const safariResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
+        const safariResponse = await axios.get(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
         console.log("Safari Response:", safariResponse);
 
         console.log("Raw Image2 field:", safariResponse.data.image2);
@@ -69,7 +69,7 @@ const SafariDetail = () => {
     if (safari && safari.id) {
       try {
         setLoadingReviews(true)
-        const reviewsResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews/safari/${safariId}/`)
+        const reviewsResponse = await axios.get(`http://127.0.0.1:8000/safari/reviews/safari/${safariId}/`)
         setReviews(reviewsResponse.data)
       } catch (err) {
         console.error('Error fetching reviews', err.response ? err.response.data : err.message)
@@ -93,11 +93,6 @@ const SafariDetail = () => {
   const handleReviewSubmit = useCallback(async (reviewData) => {
     console.log('Submitting review with data:', reviewData);
 
-    const userToken = localStorage.getItem('token')
-    if (!userToken) {
-      alert('You need to be logged in to submit a review');
-      return;
-    }
     if (!safari || !safari.id) {
       alert('Safari ID is missing. Please make sure you are viewing a valid safari.');
       return;
@@ -107,19 +102,9 @@ const SafariDetail = () => {
       safari: safari.id
     }
     try {
-      await axios.post('https://malikale-safaris.onrender.com/safari/reviews/', adjustedReviewData, {
-        headers: {
-          Authorization: `Token ${userToken}`
-        }
-      })
+      await axios.post('http://127.0.0.1:8000/safari/reviews/', adjustedReviewData)
       alert('Review submitted successfully')
-      const response = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews?safariId=${safari.id}`,
-        {
-          headers: {
-            Authorization: `Token ${userToken}`
-          }
-        }
-      )
+      const response = await axios.get(`http://127.0.0.1:8000/safari/reviews?safariId=${safari.id}`)
       setReviews(response.data)
     } catch (error) {
       console.error('Error submitting review', error.response?.data || error.message)
@@ -156,14 +141,10 @@ const SafariDetail = () => {
       }
 
       try {
-        await axios.post('https://malikale-safaris.onrender.com/safari/api/bookings/', bookingData, {
-          headers: {
-            Authorization: `Token ${localStorage.getItem('token')}`,
-          }
-        })
+        await axios.post('http://127.0.0.1:8000/safari/api/bookings/', bookingData)
         alert('Booking Successful! Await confirmation.')
         resetForm()
-        navigate(`/payment/${safariId}`)
+        // navigate(`/payment/${safariId}`)
       } catch (error) {
         console.error('Error in booking:', error)
         if (error.response?.status === 401) {
@@ -503,7 +484,7 @@ const SafariDetail = () => {
                 <div className='reviews-list'>
                   {reviews.map(review => (
                     <div key={review.id} className='review-cardy'>
-                      <h3 className='review-username'>{review.username}</h3>
+                      <h3 className='review-username'>{review.name || 'Anonymous'}</h3>
                       <p className='review-rating'><strong>Rating:</strong> {review.rating}</p>
                       <p className='review-comment'>{review.comment}</p>
                       <p className='review-date'><small>{new Date(review.created_at).toLocaleDateString()}</small></p>
@@ -522,12 +503,23 @@ const SafariDetail = () => {
                 console.log('Current safari ID:', safari ? safari.id : 'No ID');
                 const reviewData = {
                   safari_id: safari ? safari.id : null,
+                  name: e.target.name.value,
                   rating: e.target.rating.value,
                   comment: e.target.comment.value,
                 }
                 console.log('Review data before submission:', reviewData);
                 handleReviewSubmit(reviewData)
               }}>
+                <div className='form-group'>
+                  <label htmlFor="">Name</label>
+                  <input
+                    type="text"
+                    name='name'
+                    className='form-control'
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
                 <div className='form-group'>
                   <label htmlFor="">Rating</label>
                   <input

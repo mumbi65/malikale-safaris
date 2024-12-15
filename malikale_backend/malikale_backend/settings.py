@@ -125,7 +125,7 @@ DATABASES = {
 }
 
 
-DATABASES["default"] = env.db("DATABASE_URL")
+# DATABASES["default"] = env.db("DATABASE_URL")
 
 # postgresql://malikale_database_user:Myj8lmXH3JaJazPjUK9wL5K0YWSbKNFA@dpg-csve62u8ii6s73erjmb0-a.oregon-postgres.render.com/malikale_database
 

@@ -24,7 +24,7 @@ const Login = () => {
         try {
             await loginFormSchema.validate({ identifier, password }, { abortEarly: false })
 
-            const response = await axios.post("https://malikale-safaris.onrender.com/api/auth/login/", {
+            const response = await axios.post("http://127.0.0.1:8000/api/auth/login/", {
                 username: identifier,
                 password,
             })

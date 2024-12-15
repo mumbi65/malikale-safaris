@@ -60,21 +60,17 @@ class SafariPackageListView(APIView):
 
 class ReviewListCreateView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Review.objects.filter(user=self.request.user)
-        
         safari_id = self.request.query_params.get('safariId')
         if safari_id:
             return Review.objects.filter(safari_id=safari_id)
         return Review.objects.none()
 
     def perform_create(self, serializer):
-        print(self.request.data)
         safari = SafariPackage.objects.get(id=self.request.data['safari'])
-        serializer.save(user=self.request.user, safari=safari, rating=self.request.data['rating'])
+        serializer.save(name=self.request.data['name'], safari=safari, rating=self.request.data['rating'])
 
 
 class SafariReviewListView(generics.ListAPIView):
@@ -102,7 +98,7 @@ class ReviewUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def create_booking(request):
     request.data['user'] = request.user.id
     serializer = BookingSerializer(data=request.data)

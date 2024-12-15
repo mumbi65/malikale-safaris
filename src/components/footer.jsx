@@ -13,8 +13,8 @@ const Footer = () =>{
                 <div className="footer-contact-info row">
                     <h5>Contact Info</h5>
                     <p>Open from 8 AM to 9 PM everyday</p>
-                    <p><FontAwesomeIcon icon={faPhone}/> +254748153767</p>
-                    <p><FontAwesomeIcon icon={faEnvelope}/> malikale@gmail.com</p>
+                    <p><FontAwesomeIcon icon={faPhone}/> +254722651926</p>
+                    <p><FontAwesomeIcon icon={faEnvelope}/> malikalesafariskenya@gmail.com</p>
                     <p><FontAwesomeIcon icon={faMapMarkerAlt}/> Nairobi, Kenya</p>
                 </div>
                 <div className="destinations row">

@@ -16,7 +16,7 @@ const NavBar = () =>{
     useEffect(() => {
         const fetchSafaris = async () => {
             try {
-                const response = await axios.get("https://malikale-safaris.onrender.com/safari/api/safaris/")
+                const response = await axios.get("http://127.0.0.1:8000/safari/api/safaris/")
                 setSafaris(response.data)
                 setLoading(false)
             } catch (error) {
@@ -46,7 +46,7 @@ const NavBar = () =>{
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                     <li className="nav-item navbar-link">
-                                        <Link to="/home" className="nav-link" aria-current="page">Home</Link>
+                                        <Link to="/" className="nav-link" aria-current="page">Home</Link>
                                     </li>
                                     <li className="nav-item navbar-link">
                                         <Link to="/aboutus" className="nav-link" >About Us</Link>
@@ -76,9 +76,9 @@ const NavBar = () =>{
                                     <li className="nav-item navbar-link">
                                         <Link  to="/contactus" className="nav-link" >Contact Us</Link>
                                     </li>
-                                    <li className="nav-item navbar-link">
+                                    {/* <li className="nav-item navbar-link">
                                         <Link  to="/profile" className="nav-link" ><FontAwesomeIcon icon={faUser}/></Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                                 {/* <div>
                                     <form className="d-flex" role="search">

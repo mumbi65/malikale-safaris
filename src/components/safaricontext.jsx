@@ -22,7 +22,7 @@ export const useSafari = () => useContext(SafariContext);
 export const SafariProvider = ({ children }) => {
   const [mapData] = useState([
     {
-        id: 101,
+        id: 1,
         title: "7-Day Nothern & Southern Kenya Savanna private safari",
         duration: "7 Days",
         price: "$1000",
@@ -48,7 +48,7 @@ export const SafariProvider = ({ children }) => {
         mapEmbedUrl:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.365552382782!2d37.5190515273278!3d0.611098525425451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x17888d933c6f7369%3A0xa2e2dc34ae133bde!2sSamburu%20National%20Reserve!5e0!3m2!1sen!2ske!4v1721503570619!5m2!1sen!2ske"
       },
       {
-        id: 102,
+        id: 2,
         title: "4-Day Mombasa or Diani – Tsavo East – Amboseli – Nairobi",
         duration: "4 Days",
         price: "$1500",
@@ -71,7 +71,7 @@ export const SafariProvider = ({ children }) => {
         mapEmbedUrl:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31875.835545358816!2d37.89051493625558!3d-2.9643840999978415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x183980bcec682bb7%3A0xfc507de3c2bb2aff!2sTsavo%20National%20Park!5e0!3m2!1sen!2ske!4v1721506051229!5m2!1sen!2ske"
       },
       {
-        id: 103,
+        id: 3,
         title: "4 Days Masai Mara Flying Safari",
         duration: "4 Days",
         price: "$1200",
@@ -94,7 +94,7 @@ export const SafariProvider = ({ children }) => {
         mapEmbedUrl:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7977.740869178582!2d35.00676243374945!3d-1.2489575186174333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182ced340e0926ff%3A0xf11b680298c8c545!2sMasai%20Mara%20National%20Reserve%2C%20Kenya!5e0!3m2!1sen!2ske!4v1721546025083!5m2!1sen!2ske"
       },
       {
-        id: 104,
+        id: 4,
         title: "5 Days Tsavo West, Amboseli, Tsavo East National park game safari",
         duration: "5 Days",
         price: "$2000",
@@ -118,7 +118,7 @@ export const SafariProvider = ({ children }) => {
         mapEmbedUrl:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3985.543034634989!2d37.25804577312224!3d-2.652665138642296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18309e7455555555%3A0x8405eed269adf949!2sAmboseli%20National%20Park!5e0!3m2!1sen!2ske!4v1721546131113!5m2!1sen!2ske"
       },
       {
-        id: 105,
+        id: 5,
         title: "7 Days, Mt Kilimanjaro – Rongai Route",
         duration: "7 Days",
         price: "$900",
@@ -144,7 +144,7 @@ export const SafariProvider = ({ children }) => {
         mapEmbedUrl:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8121256.557451141!2d29.68294099062805!3d-6.334757590690399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184b51314869a111%3A0x885a17314bc1c430!2sTanzania!5e0!3m2!1sen!2ske!4v1721546854075!5m2!1sen!2ske"
       },
       {
-        id: 106,
+        id: 6,
         title: "4 Days Lake Nakuru & Naivasha",
         duration: "4 Days",
         price: "$1200",
