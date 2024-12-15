@@ -44,10 +44,6 @@ const SafariDetail = () => {
     if (safariId) {
       try {
         const safariResponse = await axios.get(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
-        console.log("Safari Response:", safariResponse);
-
-        console.log("Raw Image2 field:", safariResponse.data.image2);
-        console.log("Full Safari Object:", JSON.stringify(safariResponse.data, null, 2));
 
         if (safariResponse.data && safariResponse.data.id) {
           setSafari(safariResponse.data);
@@ -91,7 +87,6 @@ const SafariDetail = () => {
 
 
   const handleReviewSubmit = useCallback(async (reviewData) => {
-    console.log('Submitting review with data:', reviewData);
 
     if (!safari || !safari.id) {
       alert('Safari ID is missing. Please make sure you are viewing a valid safari.');
