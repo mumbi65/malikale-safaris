@@ -16,7 +16,7 @@ const NavBar = () =>{
     useEffect(() => {
         const fetchSafaris = async () => {
             try {
-                const response = await axios.get("http://127.0.0.1:8000/safari/api/safaris/")
+                const response = await axios.get("https://malikale-safaris.onrender.com/safari/api/safaris/")
                 setSafaris(response.data)
                 setLoading(false)
             } catch (error) {

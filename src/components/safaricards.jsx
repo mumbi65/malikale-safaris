@@ -30,7 +30,7 @@ const SafariCard = () => {
             <img src={safari.image} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{safari.title}</h5>
-              <p>{safari.price}</p>
+              {/* <p>{safari.price}</p> */}
               <p className="card-text">{safari.description}</p>
               <p className="card-text"><FontAwesomeIcon icon={faMapMarkerAlt} className="icon"/> {safari.location}</p>
               <p className="card-text"><FontAwesomeIcon icon={faClock} className="icon"/> {safari.duration}</p>

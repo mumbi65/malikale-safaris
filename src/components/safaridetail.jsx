@@ -43,7 +43,7 @@ const SafariDetail = () => {
   const fetchSafariDetails = async () => {
     if (safariId) {
       try {
-        const safariResponse = await axios.get(`http://127.0.0.1:8000/safari/api/safari/${safariId}/`)
+        const safariResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/api/safari/${safariId}/`)
 
         if (safariResponse.data && safariResponse.data.id) {
           setSafari(safariResponse.data);
@@ -65,7 +65,7 @@ const SafariDetail = () => {
     if (safari && safari.id) {
       try {
         setLoadingReviews(true)
-        const reviewsResponse = await axios.get(`http://127.0.0.1:8000/safari/reviews/safari/${safariId}/`)
+        const reviewsResponse = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews/safari/${safariId}/`)
         setReviews(reviewsResponse.data)
       } catch (err) {
         console.error('Error fetching reviews', err.response ? err.response.data : err.message)
@@ -97,9 +97,9 @@ const SafariDetail = () => {
       safari: safari.id
     }
     try {
-      await axios.post('http://127.0.0.1:8000/safari/reviews/', adjustedReviewData)
+      await axios.post('https://malikale-safaris.onrender.com/safari/reviews/', adjustedReviewData)
       alert('Review submitted successfully')
-      const response = await axios.get(`http://127.0.0.1:8000/safari/reviews?safariId=${safari.id}`)
+      const response = await axios.get(`https://malikale-safaris.onrender.com/safari/reviews?safariId=${safari.id}`)
       setReviews(response.data)
     } catch (error) {
       console.error('Error submitting review', error.response?.data || error.message)
@@ -136,7 +136,7 @@ const SafariDetail = () => {
       }
 
       try {
-        await axios.post('http://127.0.0.1:8000/safari/api/bookings/', bookingData)
+        await axios.post('https://malikale-safaris.onrender.com/safari/api/bookings/', bookingData)
         alert('Booking Successful! Await confirmation.')
         resetForm()
         // navigate(`/payment/${safariId}`)

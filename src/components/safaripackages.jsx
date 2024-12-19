@@ -22,7 +22,7 @@ const SafariPackage = () => {
             <img src={safari.image} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{safari.title}</h5>
-              <p>{safari.price}</p>
+              {/* <p>{safari.price}</p> */}
               <p className="card-text">{safari.description}</p>
               <p className="card-text"><FontAwesomeIcon icon={faMapMarkerAlt} className="safari-package-icon"/> {safari.location}</p>
               <p className="card-text"><FontAwesomeIcon icon={faClock} className="safari-package-icon"/> {safari.duration}</p>
@@ -30,7 +30,6 @@ const SafariPackage = () => {
               <Link to={`/safari/${safari.id}`}  className="btn btn-outline-success">See More</Link>
             </div>
           </div>
-         
       ))}
     </div>
     <Footer/>
