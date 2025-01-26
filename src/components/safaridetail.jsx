@@ -139,7 +139,7 @@ const SafariDetail = () => {
         await axios.post('https://malikale-safaris.onrender.com/safari/api/bookings/', bookingData)
         alert('Booking Successful! Await confirmation.')
         resetForm()
-        // navigate(`/payment/${safariId}`)
+        navigate(`/payment/${safariId}`)
       } catch (error) {
         console.error('Error in booking:', error)
         if (error.response?.status === 401) {
